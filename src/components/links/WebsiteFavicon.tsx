@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { Globe2 } from "lucide-react";
-import { getWebsiteFaviconUrl } from "@/lib/url";
+import { getWebsiteFaviconUrls } from "@/lib/url";
 
 type WebsiteFaviconProps = {
   url: string;
 };
 
 export function WebsiteFavicon({ url }: WebsiteFaviconProps) {
-  const [hasError, setHasError] = useState(false);
+  const [faviconIndex, setFaviconIndex] = useState(0);
+  const faviconUrls = getWebsiteFaviconUrls(url);
+  const faviconUrl = faviconUrls[faviconIndex];
 
-  if (hasError) return <Globe2 aria-hidden="true" />;
+  if (!faviconUrl) return <Globe2 aria-hidden="true" />;
 
   return (
     <img
-      src={getWebsiteFaviconUrl(url)}
+      src={faviconUrl}
       alt=""
       loading="lazy"
       referrerPolicy="no-referrer"
-      onError={() => setHasError(true)}
+      onError={() => setFaviconIndex((index) => index + 1)}
     />
   );
 }

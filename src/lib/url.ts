@@ -28,7 +28,15 @@ export function getDisplayUrl(value: string) {
   return `${url.hostname}${url.pathname === "/" ? "" : url.pathname.replace(/\/$/, "")}`;
 }
 
-export function getWebsiteFaviconUrl(value: string) {
+export function getWebsiteFaviconUrls(value: string) {
   const url = new URL(value);
-  return new URL("/favicon.ico", url.origin).toString();
+  const faviconPaths = [
+    "/favicon.ico",
+    "/favicon.svg",
+    "/favicon.png",
+    "/favicon-32.png",
+    "/apple-touch-icon.png",
+  ];
+
+  return faviconPaths.map((path) => new URL(path, url.origin).toString());
 }
