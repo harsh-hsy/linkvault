@@ -27,3 +27,8 @@ export function getDisplayUrl(value: string) {
   const url = new URL(value);
   return `${url.hostname}${url.pathname === "/" ? "" : url.pathname.replace(/\/$/, "")}`;
 }
+
+export function getWebsiteFaviconUrl(value: string) {
+  const url = new URL(value);
+  return new URL("/favicon.ico", url.origin).toString();
+}

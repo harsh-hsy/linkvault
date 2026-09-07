@@ -648,6 +648,13 @@ h1 {
   height: 18px;
 }
 
+.platform-icon img {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
 .link-identity {
   min-width: 0;
   flex: 1;

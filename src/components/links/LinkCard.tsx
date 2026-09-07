@@ -1,4 +1,5 @@
 import { LinkActions } from "@/components/links/LinkActions";
+import { WebsiteFavicon } from "@/components/links/WebsiteFavicon";
 import { getPlatform } from "@/data/platforms";
 import { getDisplayUrl } from "@/lib/url";
 import type { SavedLink } from "@/types/link";
@@ -19,7 +20,11 @@ export function LinkCard({ link, onCopy, onDelete, onEdit, onToggleFavorite }: L
     <article className="link-card">
       <div className="link-card-header">
         <div className="platform-icon" title={platform.name}>
-          <PlatformIcon aria-hidden="true" />
+          {link.platformId === "custom" ? (
+            <WebsiteFavicon key={link.url} url={link.url} />
+          ) : (
+            <PlatformIcon aria-hidden="true" />
+          )}
         </div>
 
         <div className="link-identity">
