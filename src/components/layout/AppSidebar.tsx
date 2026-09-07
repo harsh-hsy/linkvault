@@ -46,7 +46,13 @@ export function AppSidebar({
         <div className="brand-row">
           <div className="brand">
             <span className="brand-mark">
-              <img src="/favicon.png" alt="" />
+              <img
+                src="/favicon-32.png"
+                srcSet="/favicon-32.png 1x, /favicon-64.png 2x"
+                width="32"
+                height="32"
+                alt=""
+              />
             </span>
             <span>LinkVault</span>
           </div>

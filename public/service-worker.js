@@ -1,5 +1,15 @@
-const cacheName = "linkvault-app-v2";
-const appShell = ["/", "/favicon.png", "/manifest.webmanifest"];
+const cacheName = "linkvault-app-v4";
+const appShell = [
+  "/",
+  "/manifest.webmanifest",
+  "/favicon-16.png",
+  "/favicon-32.png",
+  "/favicon-48.png",
+  "/favicon-64.png",
+  "/apple-touch-icon-180.png",
+  "/pwa-icon-192.png",
+  "/pwa-icon-512.png",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(appShell)));
