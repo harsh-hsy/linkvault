@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "LinkVault — Save, Organize & Find Links",
+  "short_name": "LinkVault",
+  "description": "Save and organize important links with collections, tags, favorites, and instant search.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

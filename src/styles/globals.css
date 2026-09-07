@@ -48,6 +48,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
@@ -1392,8 +1393,24 @@ h1 {
   }
 
   .sidebar {
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding-left: max(12px, env(safe-area-inset-left));
     transform: translateX(-100%);
     transition: transform 200ms ease;
+  }
+
+  .app-header {
+    height: calc(65px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-left: max(16px, env(safe-area-inset-left));
+  }
+
+  .content {
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(36px, env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
   }
 
   .sidebar.is-open {
@@ -1424,6 +1441,20 @@ h1 {
   .link-grid {
     grid-template-columns: 1fr;
   }
+
+  .sidebar-item,
+  .collection-select {
+    height: 44px;
+  }
+
+  .collection-actions {
+    top: 4px;
+  }
+
+  .collection-actions button {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1436,8 +1467,14 @@ h1 {
   }
 
   .add-link-button {
-    width: 38px;
+    width: 42px;
+    height: 42px;
     padding: 0;
+  }
+
+  .app-header .icon-button {
+    width: 42px;
+    height: 42px;
   }
 
   .content {
@@ -1451,8 +1488,18 @@ h1 {
 
   .add-link-dialog {
     max-height: 92vh;
+    padding-bottom: env(safe-area-inset-bottom);
     border-bottom: 0;
     border-radius: 16px 16px 0 0;
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .platform-search input,
+  .collection-select-trigger,
+  .search-field input,
+  .results-bar select {
+    font-size: 16px;
   }
 
   .platform-step,

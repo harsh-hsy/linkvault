@@ -2,22 +2,67 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="Save important links, organize them with collections and tags, and find anything instantly with LinkVault."
+      content="Save important links, organize bookmarks with collections and tags, and find anything instantly with LinkVault. Private and stored in your browser."
     />
+    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0a0a0a" />
+    <meta name="application-name" content="LinkVault" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="LinkVault" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LinkVault" />
+    <meta property="og:title" content="LinkVault — Save, Organize &amp; Find Links" />
+    <meta
+      property="og:description"
+      content="A fast, private link organizer with collections, tags, favorites, and instant search."
+    />
+    <meta property="og:url" content="https://getlinkvault.pages.dev/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="LinkVault — Save, Organize &amp; Find Links" />
+    <meta
+      name="twitter:description"
+      content="A fast, private link organizer with collections, tags, favorites, and instant search."
+    />
+    <link rel="canonical" href="https://getlinkvault.pages.dev/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <title>LinkVault — Save, Organize &amp; Find Links</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "LinkVault",
+        "url": "https://getlinkvault.pages.dev/",
+        "description": "A private browser-based bookmark manager for saving, organizing, and finding links.",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
     <script>
       const savedTheme = localStorage.getItem("linkvault-theme");
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      document.documentElement.dataset.theme = savedTheme ?? (prefersDark ? "dark" : "light");
+      const activeTheme = savedTheme ?? (prefersDark ? "dark" : "light");
+      document.documentElement.dataset.theme = activeTheme;
+      document
+        .querySelector('meta[name="theme-color"]')
+        .setAttribute("content", activeTheme === "dark" ? "#0a0a0a" : "#fafafa");
     </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>LinkVault requires JavaScript to save and organize links in your browser.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

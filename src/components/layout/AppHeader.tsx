@@ -13,6 +13,9 @@ export function AppHeader({ searchQuery, onSearchChange, onAddLink, onMenuClick 
     const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
 
     root.dataset.theme = nextTheme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", nextTheme === "dark" ? "#0a0a0a" : "#fafafa");
     localStorage.setItem("linkvault-theme", nextTheme);
   }
 
