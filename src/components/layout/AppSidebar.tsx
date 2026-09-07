@@ -46,7 +46,7 @@ export function AppSidebar({
         <div className="brand-row">
           <div className="brand">
             <span className="brand-mark">
-              <img src="/favicon.svg" alt="" />
+              <img src="/favicon.png" alt="" />
             </span>
             <span>LinkVault</span>
           </div>

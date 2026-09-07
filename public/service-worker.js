@@ -1,5 +1,5 @@
-const cacheName = "linkvault-app-v1";
-const appShell = ["/", "/favicon.svg", "/manifest.webmanifest"];
+const cacheName = "linkvault-app-v2";
+const appShell = ["/", "/favicon.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(appShell)));
