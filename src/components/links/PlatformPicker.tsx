@@ -10,7 +10,7 @@ export function PlatformPicker({ onSelect }: PlatformPickerProps) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const customPlatform = platforms[0];
-  const popularPlatforms = platforms.filter((platform) => platform.popular).slice(0, 10);
+  const supportedPlatforms = platforms.slice(1);
   const searchResults = normalizedQuery
     ? platforms
         .slice(1)
@@ -74,13 +74,13 @@ export function PlatformPicker({ onSelect }: PlatformPickerProps) {
         </div>
       ) : (
         <div>
-          <p className="platform-section-title">Popular platforms</p>
-          <div className="popular-platforms">
-            {popularPlatforms.map((platform) => {
+          <p className="platform-section-title">All platforms</p>
+          <div className="platform-grid" aria-label="Supported platforms">
+            {supportedPlatforms.map((platform) => {
               const Icon = platform.icon;
               return (
                 <button key={platform.id} type="button" onClick={() => onSelect(platform)}>
-                  <span className="popular-platform-icon">
+                  <span className="platform-grid-icon">
                     <Icon aria-hidden="true" />
                   </span>
                   <span>{platform.name}</span>
@@ -89,7 +89,7 @@ export function PlatformPicker({ onSelect }: PlatformPickerProps) {
             })}
           </div>
           <p className="platform-hint">
-            Search to explore {platforms.length - 1} supported platforms.
+            Scroll to explore all {supportedPlatforms.length} supported platforms.
           </p>
         </div>
       )}

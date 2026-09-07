@@ -48,7 +48,6 @@ export type Platform = {
   name: string;
   icon: IconType;
   keywords: string[];
-  popular?: boolean;
   usernameLabel?: string;
   usernamePlaceholder?: string;
   profileBaseUrl?: string;
@@ -68,7 +67,6 @@ export const platforms: Platform[] = [
     name: "GitHub",
     icon: SiGithub,
     keywords: ["git", "code", "repository", "developer"],
-    popular: true,
     usernameLabel: "GitHub username",
     usernamePlaceholder: "octocat",
     profileBaseUrl: "https://github.com/",
@@ -78,7 +76,6 @@ export const platforms: Platform[] = [
     name: "YouTube",
     icon: SiYoutube,
     keywords: ["video", "channel", "creator", "google"],
-    popular: true,
     usernameLabel: "Channel handle",
     usernamePlaceholder: "@channel",
     profileBaseUrl: "https://youtube.com/@",
@@ -88,7 +85,6 @@ export const platforms: Platform[] = [
     name: "LinkedIn",
     icon: FaLinkedinIn,
     keywords: ["work", "career", "professional", "job"],
-    popular: true,
     usernameLabel: "LinkedIn username",
     usernamePlaceholder: "username",
     profileBaseUrl: "https://linkedin.com/in/",
@@ -98,7 +94,6 @@ export const platforms: Platform[] = [
     name: "Instagram",
     icon: SiInstagram,
     keywords: ["photo", "social", "meta", "creator"],
-    popular: true,
     usernameLabel: "Instagram username",
     usernamePlaceholder: "username",
     profileBaseUrl: "https://instagram.com/",
@@ -108,7 +103,6 @@ export const platforms: Platform[] = [
     name: "X",
     icon: SiX,
     keywords: ["twitter", "social", "tweet"],
-    popular: true,
     usernameLabel: "X username",
     usernamePlaceholder: "username",
     profileBaseUrl: "https://x.com/",
@@ -118,7 +112,6 @@ export const platforms: Platform[] = [
     name: "Reddit",
     icon: SiReddit,
     keywords: ["community", "forum", "social"],
-    popular: true,
     usernameLabel: "Reddit username",
     usernamePlaceholder: "username",
     profileBaseUrl: "https://reddit.com/user/",
@@ -128,7 +121,6 @@ export const platforms: Platform[] = [
     name: "Facebook",
     icon: FaFacebookF,
     keywords: ["social", "meta", "profile", "page"],
-    popular: true,
     usernameLabel: "Facebook username",
     usernamePlaceholder: "username",
     profileBaseUrl: "https://facebook.com/",
@@ -138,7 +130,6 @@ export const platforms: Platform[] = [
     name: "TikTok",
     icon: SiTiktok,
     keywords: ["video", "social", "creator"],
-    popular: true,
     usernameLabel: "TikTok username",
     usernamePlaceholder: "@username",
     profileBaseUrl: "https://tiktok.com/@",
@@ -148,14 +139,12 @@ export const platforms: Platform[] = [
     name: "Discord",
     icon: SiDiscord,
     keywords: ["community", "chat", "server", "invite"],
-    popular: true,
   },
   {
     id: "spotify",
     name: "Spotify",
     icon: SiSpotify,
     keywords: ["music", "podcast", "playlist", "artist"],
-    popular: true,
   },
   {
     id: "git",

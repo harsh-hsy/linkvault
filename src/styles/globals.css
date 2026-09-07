@@ -950,7 +950,7 @@ h1 {
 
 .custom-platform-button:hover,
 .platform-result-list button:hover,
-.popular-platforms button:hover {
+.platform-grid button:hover {
   border-color: var(--border-strong);
   background: var(--surface-muted);
 }
@@ -973,13 +973,22 @@ h1 {
   letter-spacing: 0.02em;
 }
 
-.popular-platforms {
+.platform-grid {
+  --platform-card-height: 88px;
+
   display: grid;
+  max-height: calc((var(--platform-card-height) * 2) + 10px);
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: var(--platform-card-height);
   gap: 10px;
+  padding-right: 6px;
+  overflow-y: auto;
+  scrollbar-color: var(--border-strong) transparent;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
 }
 
-.popular-platforms button {
+.platform-grid button {
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -992,7 +1001,16 @@ h1 {
   font-size: 12px;
 }
 
-.popular-platform-icon,
+.platform-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.platform-grid::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--border-strong);
+}
+
+.platform-grid-icon,
 .result-platform-icon,
 .selected-platform-icon {
   display: grid;
@@ -1001,13 +1019,13 @@ h1 {
   background: var(--background);
 }
 
-.popular-platform-icon {
+.platform-grid-icon {
   width: 34px;
   height: 34px;
   border-radius: 9px;
 }
 
-.popular-platform-icon svg {
+.platform-grid-icon svg {
   width: 18px;
   height: 18px;
 }
@@ -1663,7 +1681,8 @@ h1 {
     margin-left: auto;
   }
 
-  .popular-platforms {
+  .platform-grid {
+    max-height: calc((var(--platform-card-height) * 5) + 40px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
