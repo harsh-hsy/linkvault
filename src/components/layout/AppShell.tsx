@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Grid2X2, Link2, List, Pencil, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { CollectionDialog } from "@/components/collections/CollectionDialog";
+import { AppFooter } from "@/components/layout/AppFooter";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar, type LibraryView } from "@/components/layout/AppSidebar";
 import { AddLinkDialog } from "@/components/links/AddLinkDialog";
@@ -311,6 +312,8 @@ export function AppShell() {
             </section>
           )}
         </main>
+
+        <AppFooter />
       </div>
 
       {isFormOpen && (
