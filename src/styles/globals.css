@@ -325,6 +325,7 @@ summary:focus-visible {
 }
 
 .app-header {
+  --header-control-size: 40px;
   position: sticky;
   top: 0;
   z-index: 30;
@@ -365,6 +366,16 @@ summary:focus-visible {
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
+}
+
+.app-header .search-field input,
+.app-header .button {
+  height: var(--header-control-size);
+}
+
+.app-header .icon-button {
+  width: var(--header-control-size);
+  height: var(--header-control-size);
 }
 
 .search-field input::placeholder {
@@ -1412,6 +1423,7 @@ h1 {
   }
 
   .app-header {
+    --header-control-size: 42px;
     height: calc(65px + env(safe-area-inset-top));
     gap: 10px;
     padding-top: env(safe-area-inset-top);
@@ -1471,10 +1483,9 @@ h1 {
 
 @media (max-width: 620px) {
   .add-link-button {
-    width: 42px;
-    min-width: 42px;
-    height: 42px;
-    flex-basis: 42px;
+    width: var(--header-control-size);
+    min-width: var(--header-control-size);
+    flex-basis: var(--header-control-size);
     padding: 0;
     border-radius: 10px;
   }
@@ -1487,11 +1498,6 @@ h1 {
 @media (max-width: 520px) {
   .app-header {
     gap: 7px;
-  }
-
-  .app-header .icon-button {
-    width: 42px;
-    height: 42px;
   }
 
   .content {
