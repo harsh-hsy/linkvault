@@ -1,6 +1,6 @@
 {
   "id": "/",
-  "name": "LinkVault — Save, Organize & Find Links",
+  "name": "LinkVault",
   "short_name": "LinkVault",
   "description": "Save and organize important links with collections, tags, favorites, and instant search.",
   "start_url": "/",

@@ -1,4 +1,4 @@
-const cacheName = "linkvault-app-v4";
+const cacheName = "linkvault-app-v5";
 const appShell = [
   "/",
   "/manifest.webmanifest",
