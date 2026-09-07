@@ -401,6 +401,13 @@ summary:focus-visible {
   gap: 24px;
 }
 
+.page-heading-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
 .eyebrow,
 .page-description,
 .results-bar p {
@@ -534,7 +541,8 @@ h1 {
   display: block;
 }
 
-.view-switcher {
+.view-switcher,
+.collection-page-actions {
   display: flex;
   padding: 2px;
   border: 1px solid var(--border);
@@ -542,9 +550,15 @@ h1 {
   background: var(--surface);
 }
 
-.view-switcher .icon-button {
+.view-switcher .icon-button,
+.collection-page-actions .icon-button {
   width: 30px;
   height: 30px;
+}
+
+.delete-button:hover {
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
 }
 
 /* Link library */
@@ -1348,6 +1362,62 @@ h1 {
   padding: 20px;
 }
 
+.confirm-dialog {
+  display: grid;
+  width: min(420px, 100%);
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--background);
+  box-shadow: 0 28px 80px rgb(0 0 0 / 28%);
+  animation: dialog-in 180ms ease-out;
+}
+
+.confirm-dialog-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--danger);
+}
+
+.confirm-dialog-icon svg {
+  width: 19px;
+}
+
+.confirm-dialog-copy h2 {
+  font-size: 18px;
+}
+
+.confirm-dialog-copy p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.button-danger {
+  border-color: var(--danger);
+  background: var(--danger);
+  color: #fff;
+}
+
+.button-danger:hover {
+  opacity: 0.86;
+}
+
 .form-error {
   margin: -6px 0 0;
   color: var(--danger);
@@ -1460,6 +1530,7 @@ h1 {
 
   .page-heading {
     align-items: flex-start;
+    gap: 12px;
   }
 
   .link-grid {
@@ -1472,7 +1543,17 @@ h1 {
   }
 
   .collection-actions {
-    top: 4px;
+    position: static;
+    align-self: center;
+    padding-left: 0;
+    background: transparent;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .collection-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .collection-actions button {
@@ -1512,6 +1593,12 @@ h1 {
   .add-link-dialog {
     max-height: 92vh;
     padding-bottom: env(safe-area-inset-bottom);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .confirm-dialog {
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
     border-bottom: 0;
     border-radius: 16px 16px 0 0;
   }

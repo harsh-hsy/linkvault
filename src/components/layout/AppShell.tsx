@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Grid2X2, Link2, List } from "lucide-react";
+import { Grid2X2, Link2, List, Pencil, Trash2 } from "lucide-react";
+import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { CollectionDialog } from "@/components/collections/CollectionDialog";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar, type LibraryView } from "@/components/layout/AppSidebar";
@@ -11,6 +12,9 @@ import type { LinkDraft, SavedLink } from "@/types/link";
 
 type CardView = "grid" | "list";
 type SortOrder = "newest" | "title";
+type PendingDelete =
+  | { type: "link"; link: SavedLink }
+  | { type: "collection"; name: string; linkCount: number };
 
 export function AppShell() {
   const {
@@ -33,6 +37,7 @@ export function AppShell() {
   const [editingLink, setEditingLink] = useState<SavedLink>();
   const [collectionDialog, setCollectionDialog] = useState<{ currentName?: string }>();
   const [collectionError, setCollectionError] = useState("");
+  const [pendingDelete, setPendingDelete] = useState<PendingDelete>();
   const [libraryView, setLibraryView] = useState<LibraryView>({ type: "all" });
   const [cardView, setCardView] = useState<CardView>("grid");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
@@ -137,26 +142,31 @@ export function AppShell() {
     closeCollectionDialog();
   }
 
-  function removeCollection(name: string) {
+  function requestCollectionDelete(name: string) {
     const linkCount = links.filter((link) => link.collection === name).length;
-    const confirmation = linkCount
-      ? `Delete “${name}”? Its ${linkCount} ${linkCount === 1 ? "link" : "links"} will stay saved.`
-      : `Delete “${name}”?`;
-
-    if (!window.confirm(confirmation)) return;
-
-    deleteSavedCollection(name);
-    clearCollection(name);
-    if (libraryView.type === "collection" && libraryView.name === name) {
-      setLibraryView({ type: "all" });
-    }
-    showMessage("Collection deleted");
+    setPendingDelete({ type: "collection", name, linkCount });
   }
 
-  function removeLink(link: SavedLink) {
-    if (!window.confirm(`Delete “${link.title}”?`)) return;
-    deleteLink(link.id);
-    showMessage("Link deleted");
+  function requestLinkDelete(link: SavedLink) {
+    setPendingDelete({ type: "link", link });
+  }
+
+  function confirmDelete() {
+    if (!pendingDelete) return;
+
+    if (pendingDelete.type === "link") {
+      deleteLink(pendingDelete.link.id);
+      showMessage("Link deleted");
+    } else {
+      deleteSavedCollection(pendingDelete.name);
+      clearCollection(pendingDelete.name);
+      if (libraryView.type === "collection" && libraryView.name === pendingDelete.name) {
+        setLibraryView({ type: "all" });
+      }
+      showMessage("Collection deleted");
+    }
+
+    setPendingDelete(undefined);
   }
 
   async function copyLink(link: SavedLink) {
@@ -186,7 +196,7 @@ export function AppShell() {
         }}
         onCreateCollection={() => openCollectionDialog()}
         onEditCollection={openCollectionDialog}
-        onDeleteCollection={removeCollection}
+        onDeleteCollection={requestCollectionDelete}
         onClose={() => setIsSidebarOpen(false)}
       />
 
@@ -210,23 +220,48 @@ export function AppShell() {
               </p>
             </div>
 
-            <div className="view-switcher" aria-label="Choose link view">
-              <button
-                className={`icon-button ${cardView === "grid" ? "is-active" : ""}`}
-                type="button"
-                aria-label="Grid view"
-                onClick={() => setCardView("grid")}
-              >
-                <Grid2X2 aria-hidden="true" />
-              </button>
-              <button
-                className={`icon-button ${cardView === "list" ? "is-active" : ""}`}
-                type="button"
-                aria-label="List view"
-                onClick={() => setCardView("list")}
-              >
-                <List aria-hidden="true" />
-              </button>
+            <div className="page-heading-actions">
+              {libraryView.type === "collection" && (
+                <div className="collection-page-actions" aria-label="Manage collection">
+                  <button
+                    className="icon-button"
+                    type="button"
+                    aria-label={`Rename ${libraryView.name}`}
+                    title="Rename collection"
+                    onClick={() => openCollectionDialog(libraryView.name)}
+                  >
+                    <Pencil aria-hidden="true" />
+                  </button>
+                  <button
+                    className="icon-button delete-button"
+                    type="button"
+                    aria-label={`Delete ${libraryView.name}`}
+                    title="Delete collection"
+                    onClick={() => requestCollectionDelete(libraryView.name)}
+                  >
+                    <Trash2 aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+
+              <div className="view-switcher" aria-label="Choose link view">
+                <button
+                  className={`icon-button ${cardView === "grid" ? "is-active" : ""}`}
+                  type="button"
+                  aria-label="Grid view"
+                  onClick={() => setCardView("grid")}
+                >
+                  <Grid2X2 aria-hidden="true" />
+                </button>
+                <button
+                  className={`icon-button ${cardView === "list" ? "is-active" : ""}`}
+                  type="button"
+                  aria-label="List view"
+                  onClick={() => setCardView("list")}
+                >
+                  <List aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </section>
 
@@ -251,7 +286,7 @@ export function AppShell() {
                   key={link.id}
                   link={link}
                   onCopy={copyLink}
-                  onDelete={removeLink}
+                  onDelete={requestLinkDelete}
                   onEdit={openEditForm}
                   onToggleFavorite={toggleFavorite}
                 />
@@ -294,6 +329,24 @@ export function AppShell() {
           error={collectionError}
           onClose={closeCollectionDialog}
           onSave={saveCollection}
+        />
+      )}
+
+      {pendingDelete && (
+        <ConfirmDialog
+          title={pendingDelete.type === "link" ? "Delete this link?" : "Delete this collection?"}
+          description={
+            pendingDelete.type === "link"
+              ? `“${pendingDelete.link.title}” will be permanently removed from this browser.`
+              : pendingDelete.linkCount > 0
+                ? `“${pendingDelete.name}” will be removed. Its ${pendingDelete.linkCount} ${
+                    pendingDelete.linkCount === 1 ? "link" : "links"
+                  } will stay saved without a collection.`
+                : `“${pendingDelete.name}” will be permanently removed.`
+          }
+          confirmLabel={pendingDelete.type === "link" ? "Delete link" : "Delete collection"}
+          onCancel={() => setPendingDelete(undefined)}
+          onConfirm={confirmDelete}
         />
       )}
 
