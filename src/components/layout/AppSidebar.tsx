@@ -1,30 +1,30 @@
-import {
-  Archive,
-  BookOpen,
-  BriefcaseBusiness,
-  Code2,
-  FolderPlus,
-  Link2,
-  Settings,
-  Star,
-  UserRound,
-  X,
-  type LucideIcon,
-} from "lucide-react";
+import { Archive, Link2, Star, X } from "lucide-react";
+import type { SavedLink } from "@/types/link";
 
-const collections = [
-  { name: "Work", count: 12, color: "#3b82f6", icon: BriefcaseBusiness },
-  { name: "Learning", count: 9, color: "#f59e0b", icon: BookOpen },
-  { name: "Development", count: 15, color: "#8b5cf6", icon: Code2 },
-  { name: "Personal", count: 6, color: "#10b981", icon: UserRound },
-];
+export type LibraryView =
+  | { type: "all" }
+  | { type: "favorites" }
+  | { type: "collection"; name: string };
 
 type AppSidebarProps = {
+  links: SavedLink[];
+  collections: string[];
+  selectedView: LibraryView;
   isOpen: boolean;
+  onSelect: (view: LibraryView) => void;
   onClose: () => void;
 };
 
-export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
+export function AppSidebar({
+  links,
+  collections,
+  selectedView,
+  isOpen,
+  onSelect,
+  onClose,
+}: AppSidebarProps) {
+  const favoriteCount = links.filter((link) => link.isFavorite).length;
+
   return (
     <>
       {isOpen && (
@@ -54,34 +54,43 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
           </button>
         </div>
 
-        <nav className="sidebar-nav" aria-label="Main navigation">
-          <div>
-            <SidebarItem icon={Archive} label="All links" count={42} active />
-            <SidebarItem icon={Star} label="Favorites" count={8} />
-          </div>
+        <nav className="sidebar-nav" aria-label="Link library">
+          <SidebarItem
+            icon={Archive}
+            label="All links"
+            count={links.length}
+            active={selectedView.type === "all"}
+            onClick={() => onSelect({ type: "all" })}
+          />
+          <SidebarItem
+            icon={Star}
+            label="Favorites"
+            count={favoriteCount}
+            active={selectedView.type === "favorites"}
+            onClick={() => onSelect({ type: "favorites" })}
+          />
 
-          <div className="collections">
-            <div className="section-label">
-              <span>Collections</span>
-              <button type="button" aria-label="Create collection">
-                <FolderPlus aria-hidden="true" />
-              </button>
+          {collections.length > 0 && (
+            <div className="collections">
+              <p className="section-label">Collections</p>
+              {collections.map((collection) => (
+                <button
+                  key={collection}
+                  className={`sidebar-item ${
+                    selectedView.type === "collection" && selectedView.name === collection
+                      ? "is-active"
+                      : ""
+                  }`}
+                  type="button"
+                  onClick={() => onSelect({ type: "collection", name: collection })}
+                >
+                  <span className="collection-dot" />
+                  <span>{collection}</span>
+                  <small>{links.filter((link) => link.collection === collection).length}</small>
+                </button>
+              ))}
             </div>
-
-            {collections.map((collection) => (
-              <SidebarItem
-                key={collection.name}
-                icon={collection.icon}
-                label={collection.name}
-                count={collection.count}
-                color={collection.color}
-              />
-            ))}
-          </div>
-
-          <div className="sidebar-bottom">
-            <SidebarItem icon={Settings} label="Settings" />
-          </div>
+          )}
         </nav>
 
         <div className="privacy-note">
@@ -94,22 +103,19 @@ export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
 }
 
 type SidebarItemProps = {
-  icon: LucideIcon;
+  icon: typeof Archive;
   label: string;
-  count?: number;
-  color?: string;
-  active?: boolean;
+  count: number;
+  active: boolean;
+  onClick: () => void;
 };
 
-function SidebarItem({ icon: Icon, label, count, color, active }: SidebarItemProps) {
+function SidebarItem({ icon: Icon, label, count, active, onClick }: SidebarItemProps) {
   return (
-    <button className={`sidebar-item ${active ? "is-active" : ""}`} type="button">
-      <span className="sidebar-item-icon">
-        <Icon aria-hidden="true" />
-        {color && <i style={{ backgroundColor: color }} />}
-      </span>
+    <button className={`sidebar-item ${active ? "is-active" : ""}`} type="button" onClick={onClick}>
+      <Icon aria-hidden="true" />
       <span>{label}</span>
-      {count !== undefined && <small>{count}</small>}
+      <small>{count}</small>
     </button>
   );
 }

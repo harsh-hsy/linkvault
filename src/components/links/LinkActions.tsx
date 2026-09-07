@@ -1,23 +1,55 @@
-import { MoreHorizontal, Star } from "lucide-react";
-import type { Link } from "@/types/link";
+import { Copy, ExternalLink, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
+import type { SavedLink } from "@/types/link";
 
 type LinkActionsProps = {
-  link: Link;
+  link: SavedLink;
+  onCopy: (link: SavedLink) => void;
+  onDelete: (link: SavedLink) => void;
+  onEdit: (link: SavedLink) => void;
+  onToggleFavorite: (linkId: string) => void;
 };
 
-export function LinkActions({ link }: LinkActionsProps) {
+export function LinkActions({
+  link,
+  onCopy,
+  onDelete,
+  onEdit,
+  onToggleFavorite,
+}: LinkActionsProps) {
   return (
     <div className="link-actions">
       <button
         className={`icon-button favorite-button ${link.isFavorite ? "is-favorite" : ""}`}
         type="button"
         aria-label={link.isFavorite ? "Remove from favorites" : "Add to favorites"}
+        onClick={() => onToggleFavorite(link.id)}
       >
         <Star fill={link.isFavorite ? "currentColor" : "none"} aria-hidden="true" />
       </button>
-      <button className="icon-button" type="button" aria-label={`More actions for ${link.title}`}>
-        <MoreHorizontal aria-hidden="true" />
-      </button>
+
+      <details className="action-menu">
+        <summary className="icon-button" aria-label={`Actions for ${link.title}`}>
+          <MoreHorizontal aria-hidden="true" />
+        </summary>
+        <div>
+          <a href={link.url} target="_blank" rel="noreferrer">
+            <ExternalLink aria-hidden="true" />
+            Open
+          </a>
+          <button type="button" onClick={() => onCopy(link)}>
+            <Copy aria-hidden="true" />
+            Copy URL
+          </button>
+          <button type="button" onClick={() => onEdit(link)}>
+            <Pencil aria-hidden="true" />
+            Edit
+          </button>
+          <button className="delete-action" type="button" onClick={() => onDelete(link)}>
+            <Trash2 aria-hidden="true" />
+            Delete
+          </button>
+        </div>
+      </details>
     </div>
   );
 }

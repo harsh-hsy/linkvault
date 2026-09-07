@@ -1,23 +1,24 @@
-import { Code2, Link2 } from "lucide-react";
 import { LinkActions } from "@/components/links/LinkActions";
-import type { Link } from "@/types/link";
-
-const platformIcons = {
-  github: Code2,
-  custom: Link2,
-};
+import { getPlatform } from "@/data/platforms";
+import { getDisplayUrl } from "@/lib/url";
+import type { SavedLink } from "@/types/link";
 
 type LinkCardProps = {
-  link: Link;
+  link: SavedLink;
+  onCopy: (link: SavedLink) => void;
+  onDelete: (link: SavedLink) => void;
+  onEdit: (link: SavedLink) => void;
+  onToggleFavorite: (linkId: string) => void;
 };
 
-export function LinkCard({ link }: LinkCardProps) {
-  const PlatformIcon = platformIcons[link.platformId];
+export function LinkCard({ link, onCopy, onDelete, onEdit, onToggleFavorite }: LinkCardProps) {
+  const platform = getPlatform(link.platformId);
+  const PlatformIcon = platform.icon;
 
   return (
     <article className="link-card">
       <div className="link-card-header">
-        <div className="platform-icon">
+        <div className="platform-icon" title={platform.name}>
           <PlatformIcon aria-hidden="true" />
         </div>
 
@@ -25,25 +26,35 @@ export function LinkCard({ link }: LinkCardProps) {
           <a href={link.url} target="_blank" rel="noreferrer">
             {link.title}
           </a>
-          <span>{link.hostname}</span>
+          <span>{getDisplayUrl(link.url)}</span>
         </div>
 
-        <LinkActions link={link} />
+        <LinkActions
+          link={link}
+          onCopy={onCopy}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          onToggleFavorite={onToggleFavorite}
+        />
       </div>
 
-      <p className="link-note">{link.note}</p>
+      {link.note && <p className="link-note">{link.note}</p>}
 
-      <div className="link-meta">
-        <span className="collection-name">
-          <i style={{ backgroundColor: link.collectionColor }} />
-          {link.collection}
-        </span>
-        {link.tags.map((tag) => (
-          <span className="tag" key={tag}>
-            #{tag}
-          </span>
-        ))}
-      </div>
+      {(link.collection || link.tags.length > 0) && (
+        <div className="link-meta">
+          {link.collection && (
+            <span className="collection-name">
+              <i />
+              {link.collection}
+            </span>
+          )}
+          {link.tags.map((tag) => (
+            <span className="tag" key={tag}>
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
     </article>
   );
 }
