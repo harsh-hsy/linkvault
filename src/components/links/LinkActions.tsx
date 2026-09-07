@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Copy, ExternalLink, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
 import type { SavedLink } from "@/types/link";
 
@@ -16,6 +17,21 @@ export function LinkActions({
   onEdit,
   onToggleFavorite,
 }: LinkActionsProps) {
+  const menuRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    function closeMenu(event: PointerEvent) {
+      const menu = menuRef.current;
+
+      if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) {
+        menu.open = false;
+      }
+    }
+
+    document.addEventListener("pointerdown", closeMenu);
+    return () => document.removeEventListener("pointerdown", closeMenu);
+  }, []);
+
   return (
     <div className="link-actions">
       <button
@@ -27,7 +43,7 @@ export function LinkActions({
         <Star fill={link.isFavorite ? "currentColor" : "none"} aria-hidden="true" />
       </button>
 
-      <details className="action-menu">
+      <details ref={menuRef} className="action-menu">
         <summary className="icon-button" aria-label={`Actions for ${link.title}`}>
           <MoreHorizontal aria-hidden="true" />
         </summary>
