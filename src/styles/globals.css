@@ -341,6 +341,7 @@ summary:focus-visible {
 .search-field {
   position: relative;
   width: min(560px, 100%);
+  min-width: 0;
   margin-right: auto;
 }
 
@@ -476,6 +477,16 @@ h1 {
 
 .button-primary:hover {
   opacity: 0.84;
+}
+
+.add-link-button {
+  min-width: 96px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.add-link-button span {
+  white-space: nowrap;
 }
 
 .button-secondary {
@@ -1402,6 +1413,7 @@ h1 {
 
   .app-header {
     height: calc(65px + env(safe-area-inset-top));
+    gap: 10px;
     padding-top: env(safe-area-inset-top);
     padding-right: max(16px, env(safe-area-inset-right));
     padding-left: max(16px, env(safe-area-inset-left));
@@ -1457,19 +1469,24 @@ h1 {
   }
 }
 
-@media (max-width: 520px) {
-  .app-header {
-    gap: 7px;
+@media (max-width: 620px) {
+  .add-link-button {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    padding: 0;
+    border-radius: 10px;
   }
 
   .add-link-button span {
     display: none;
   }
+}
 
-  .add-link-button {
-    width: 42px;
-    height: 42px;
-    padding: 0;
+@media (max-width: 520px) {
+  .app-header {
+    gap: 7px;
   }
 
   .app-header .icon-button {
