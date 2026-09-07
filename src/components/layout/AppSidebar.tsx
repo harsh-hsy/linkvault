@@ -1,4 +1,4 @@
-import { Archive, Link2, Pencil, Plus, Star, Trash2, X } from "lucide-react";
+import { Archive, Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import type { SavedLink } from "@/types/link";
 
 export type LibraryView =
@@ -46,7 +46,7 @@ export function AppSidebar({
         <div className="brand-row">
           <div className="brand">
             <span className="brand-mark">
-              <Link2 aria-hidden="true" />
+              <img src="/favicon.svg" alt="" />
             </span>
             <span>LinkVault</span>
           </div>

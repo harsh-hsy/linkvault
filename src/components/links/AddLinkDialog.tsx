@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { ArrowLeft, Check, Star, X } from "lucide-react";
+import { CollectionSelect } from "@/components/collections/CollectionSelect";
 import { PlatformPicker } from "@/components/links/PlatformPicker";
 import { getPlatform, type Platform } from "@/data/platforms";
 import { buildProfileUrl, normalizeUrl } from "@/lib/url";
@@ -187,20 +188,14 @@ export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDia
             </label>
 
             <div className="form-row">
-              <label className="form-field">
+              <div className="form-field collection-field">
                 <span>Collection</span>
-                <input
-                  list="linkvault-collections"
+                <CollectionSelect
+                  collections={collections}
                   value={collection}
-                  placeholder="Work, Learning..."
-                  onChange={(event) => setCollection(event.target.value)}
+                  onChange={setCollection}
                 />
-                <datalist id="linkvault-collections">
-                  {collections.map((name) => (
-                    <option key={name} value={name} />
-                  ))}
-                </datalist>
-              </label>
+              </div>
 
               <label className="form-field">
                 <span>Tags</span>
