@@ -32,7 +32,7 @@ export function AppHeader({ onMenuClick }: AppHeaderProps) {
       </label>
 
       <button
-        className="icon-button theme-toggle"
+        className="icon-button"
         type="button"
         aria-label="Toggle color theme"
         onClick={toggleTheme}

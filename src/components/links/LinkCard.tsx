@@ -1,11 +1,9 @@
-import { BriefcaseBusiness, Code2, Link2, Play } from "lucide-react";
+import { Code2, Link2 } from "lucide-react";
 import { LinkActions } from "@/components/links/LinkActions";
 import type { Link } from "@/types/link";
 
 const platformIcons = {
   github: Code2,
-  youtube: Play,
-  linkedin: BriefcaseBusiness,
   custom: Link2,
 };
 

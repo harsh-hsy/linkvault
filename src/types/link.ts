@@ -1,4 +1,4 @@
-export type PlatformId = "github" | "youtube" | "linkedin" | "custom";
+export type PlatformId = "github" | "custom";
 
 export type Link = {
   id: string;
