@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Grid2X2, Link2, List } from "lucide-react";
+import { CollectionDialog } from "@/components/collections/CollectionDialog";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar, type LibraryView } from "@/components/layout/AppSidebar";
 import { AddLinkDialog } from "@/components/links/AddLinkDialog";
 import { LinkCard } from "@/components/links/LinkCard";
+import { useCollections } from "@/hooks/useCollections";
 import { useLinks } from "@/hooks/useLinks";
 import type { LinkDraft, SavedLink } from "@/types/link";
 
@@ -11,17 +13,38 @@ type CardView = "grid" | "list";
 type SortOrder = "newest" | "title";
 
 export function AppShell() {
-  const { links, addLink, updateLink, deleteLink, toggleFavorite } = useLinks();
+  const {
+    links,
+    addLink,
+    updateLink,
+    deleteLink,
+    toggleFavorite,
+    renameCollection: renameLinksCollection,
+    clearCollection,
+  } = useLinks();
+  const {
+    savedCollections,
+    addCollection,
+    renameCollection: renameSavedCollection,
+    deleteCollection: deleteSavedCollection,
+  } = useCollections();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingLink, setEditingLink] = useState<SavedLink>();
+  const [collectionDialog, setCollectionDialog] = useState<{ currentName?: string }>();
+  const [collectionError, setCollectionError] = useState("");
   const [libraryView, setLibraryView] = useState<LibraryView>({ type: "all" });
   const [cardView, setCardView] = useState<CardView>("grid");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
 
-  const collections = [...new Set(links.map((link) => link.collection).filter(Boolean))].sort();
+  const linkedCollections = links.map((link) => link.collection).filter(Boolean);
+  const collections = [
+    ...new Map(
+      [...savedCollections, ...linkedCollections].map((name) => [name.toLowerCase(), name]),
+    ).values(),
+  ].sort((firstName, secondName) => firstName.localeCompare(secondName));
   const visibleLinks = links
     .filter((link) => {
       if (libraryView.type === "favorites" && !link.isFavorite) return false;
@@ -56,6 +79,8 @@ export function AppShell() {
   }
 
   function saveLink(draft: LinkDraft) {
+    addCollection(draft.collection);
+
     if (editingLink) {
       updateLink(editingLink.id, draft);
       showMessage("Link updated");
@@ -66,6 +91,66 @@ export function AppShell() {
 
     setIsFormOpen(false);
     setEditingLink(undefined);
+  }
+
+  function openCollectionDialog(currentName?: string) {
+    setCollectionError("");
+    setCollectionDialog({ currentName });
+  }
+
+  function closeCollectionDialog() {
+    setCollectionDialog(undefined);
+    setCollectionError("");
+  }
+
+  function saveCollection(name: string) {
+    const cleanName = name.trim();
+    const currentName = collectionDialog?.currentName;
+
+    if (!cleanName) {
+      setCollectionError("Enter a collection name.");
+      return;
+    }
+
+    const duplicateExists = collections.some(
+      (collection) =>
+        collection.toLowerCase() === cleanName.toLowerCase() && collection !== currentName,
+    );
+
+    if (duplicateExists) {
+      setCollectionError("A collection with this name already exists.");
+      return;
+    }
+
+    if (currentName) {
+      renameSavedCollection(currentName, cleanName);
+      renameLinksCollection(currentName, cleanName);
+      if (libraryView.type === "collection" && libraryView.name === currentName) {
+        setLibraryView({ type: "collection", name: cleanName });
+      }
+      showMessage("Collection renamed");
+    } else {
+      addCollection(cleanName);
+      showMessage("Collection created");
+    }
+
+    closeCollectionDialog();
+  }
+
+  function removeCollection(name: string) {
+    const linkCount = links.filter((link) => link.collection === name).length;
+    const confirmation = linkCount
+      ? `Delete “${name}”? Its ${linkCount} ${linkCount === 1 ? "link" : "links"} will stay saved.`
+      : `Delete “${name}”?`;
+
+    if (!window.confirm(confirmation)) return;
+
+    deleteSavedCollection(name);
+    clearCollection(name);
+    if (libraryView.type === "collection" && libraryView.name === name) {
+      setLibraryView({ type: "all" });
+    }
+    showMessage("Collection deleted");
   }
 
   function removeLink(link: SavedLink) {
@@ -99,6 +184,9 @@ export function AppShell() {
           setLibraryView(view);
           setIsSidebarOpen(false);
         }}
+        onCreateCollection={() => openCollectionDialog()}
+        onEditCollection={openCollectionDialog}
+        onDeleteCollection={removeCollection}
         onClose={() => setIsSidebarOpen(false)}
       />
 
@@ -197,6 +285,15 @@ export function AppShell() {
           collections={collections}
           onClose={() => setIsFormOpen(false)}
           onSave={saveLink}
+        />
+      )}
+
+      {collectionDialog && (
+        <CollectionDialog
+          currentName={collectionDialog.currentName}
+          error={collectionError}
+          onClose={closeCollectionDialog}
+          onSave={saveCollection}
         />
       )}
 

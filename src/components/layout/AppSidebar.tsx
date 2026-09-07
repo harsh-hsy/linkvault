@@ -1,4 +1,4 @@
-import { Archive, Link2, Star, X } from "lucide-react";
+import { Archive, Link2, Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import type { SavedLink } from "@/types/link";
 
 export type LibraryView =
@@ -12,6 +12,9 @@ type AppSidebarProps = {
   selectedView: LibraryView;
   isOpen: boolean;
   onSelect: (view: LibraryView) => void;
+  onCreateCollection: () => void;
+  onEditCollection: (name: string) => void;
+  onDeleteCollection: (name: string) => void;
   onClose: () => void;
 };
 
@@ -21,6 +24,9 @@ export function AppSidebar({
   selectedView,
   isOpen,
   onSelect,
+  onCreateCollection,
+  onEditCollection,
+  onDeleteCollection,
   onClose,
 }: AppSidebarProps) {
   const favoriteCount = links.filter((link) => link.isFavorite).length;
@@ -70,27 +76,60 @@ export function AppSidebar({
             onClick={() => onSelect({ type: "favorites" })}
           />
 
-          {collections.length > 0 && (
-            <div className="collections">
+          <div className="collections">
+            <div className="collections-heading">
               <p className="section-label">Collections</p>
-              {collections.map((collection) => (
-                <button
-                  key={collection}
-                  className={`sidebar-item ${
-                    selectedView.type === "collection" && selectedView.name === collection
-                      ? "is-active"
-                      : ""
-                  }`}
-                  type="button"
-                  onClick={() => onSelect({ type: "collection", name: collection })}
-                >
-                  <span className="collection-dot" />
-                  <span>{collection}</span>
-                  <small>{links.filter((link) => link.collection === collection).length}</small>
-                </button>
-              ))}
+              <button
+                className="collection-add-button"
+                type="button"
+                aria-label="Create collection"
+                title="Create collection"
+                onClick={onCreateCollection}
+              >
+                <Plus aria-hidden="true" />
+              </button>
             </div>
-          )}
+
+            {collections.length > 0 ? (
+              collections.map((collection) => (
+                <div className="collection-row" key={collection}>
+                  <button
+                    className={`collection-select ${
+                      selectedView.type === "collection" && selectedView.name === collection
+                        ? "is-active"
+                        : ""
+                    }`}
+                    type="button"
+                    onClick={() => onSelect({ type: "collection", name: collection })}
+                  >
+                    <span className="collection-dot" />
+                    <span>{collection}</span>
+                    <small>{links.filter((link) => link.collection === collection).length}</small>
+                  </button>
+                  <div className="collection-actions">
+                    <button
+                      type="button"
+                      aria-label={`Rename ${collection}`}
+                      title="Rename collection"
+                      onClick={() => onEditCollection(collection)}
+                    >
+                      <Pencil aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Delete ${collection}`}
+                      title="Delete collection"
+                      onClick={() => onDeleteCollection(collection)}
+                    >
+                      <Trash2 aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="collections-empty">No collections yet</p>
+            )}
+          </div>
         </nav>
 
         <div className="privacy-note">

@@ -96,10 +96,8 @@ export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDia
               </button>
             )}
             <div>
-              <span>{step === "platform" ? "Choose where the link belongs" : platform.name}</span>
-              <h2 id="add-link-title">
-                {link ? "Edit link" : step === "platform" ? "Add a link" : "Add account details"}
-              </h2>
+              {step === "platform" && <span>Choose where the link belongs</span>}
+              <h2 id="add-link-title">{link ? "Edit link" : "Add a link"}</h2>
             </div>
           </div>
           <button className="icon-button" type="button" aria-label="Close" onClick={onClose}>
@@ -224,15 +222,15 @@ export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDia
               />
             </label>
 
-            <label className="favorite-field">
-              <input
-                type="checkbox"
-                checked={isFavorite}
-                onChange={(event) => setIsFavorite(event.target.checked)}
-              />
+            <button
+              className={`favorite-toggle ${isFavorite ? "is-selected" : ""}`}
+              type="button"
+              aria-pressed={isFavorite}
+              onClick={() => setIsFavorite((currentValue) => !currentValue)}
+            >
               <Star aria-hidden="true" />
-              Add to favorites
-            </label>
+              {isFavorite ? "Added to favorites" : "Add to favorites"}
+            </button>
 
             {error && <p className="form-error">{error}</p>}
 

@@ -74,5 +74,33 @@ export function useLinks() {
     );
   }
 
-  return { links, addLink, updateLink, deleteLink, toggleFavorite };
+  function renameCollection(currentName: string, nextName: string) {
+    setLinks((currentLinks) =>
+      currentLinks.map((link) =>
+        link.collection === currentName
+          ? { ...link, collection: nextName, updatedAt: new Date().toISOString() }
+          : link,
+      ),
+    );
+  }
+
+  function clearCollection(name: string) {
+    setLinks((currentLinks) =>
+      currentLinks.map((link) =>
+        link.collection === name
+          ? { ...link, collection: "", updatedAt: new Date().toISOString() }
+          : link,
+      ),
+    );
+  }
+
+  return {
+    links,
+    addLink,
+    updateLink,
+    deleteLink,
+    toggleFavorite,
+    renameCollection,
+    clearCollection,
+  };
 }
