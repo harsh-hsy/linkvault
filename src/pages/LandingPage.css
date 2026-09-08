@@ -17,7 +17,8 @@
   pointer-events: none;
 }
 
-.landing-page > * {
+.landing-page > main,
+.landing-page > .app-footer {
   position: relative;
   z-index: 1;
 }
@@ -38,80 +39,12 @@
   transform: translateY(0);
 }
 
-.landing-header {
-  position: sticky;
-  top: 16px;
-  z-index: 20;
-  display: grid;
-  width: min(calc(100% - 32px), 1180px);
-  min-height: 68px;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 24px;
-  margin: 16px auto 0;
-  padding: 10px 12px 10px 16px;
-  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--background) 88%, transparent);
-  box-shadow: 0 10px 36px rgb(0 0 0 / 5%);
-  backdrop-filter: blur(18px);
-}
-
-.landing-brand,
-.landing-header-actions,
-.landing-nav,
 .landing-hero-actions,
 .landing-trust-list,
 .benefit-item,
 .install-points {
   display: flex;
   align-items: center;
-}
-
-.landing-brand {
-  width: fit-content;
-  gap: 10px;
-  color: var(--foreground);
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  text-decoration: none;
-}
-
-.landing-brand img {
-  display: block;
-  width: 34px;
-  height: 34px;
-}
-
-.landing-nav {
-  gap: 26px;
-}
-
-.landing-nav a {
-  color: var(--muted);
-  font-size: 14px;
-  text-decoration: none;
-  transition: color 160ms ease;
-}
-
-.landing-nav a:hover {
-  color: var(--foreground);
-}
-
-.landing-header-actions {
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.landing-theme-toggle {
-  width: 42px;
-  height: 42px;
-}
-
-.landing-open-button {
-  min-height: 42px;
-  text-decoration: none;
 }
 
 .landing-page main {
@@ -483,6 +416,81 @@
   line-height: 1.65;
 }
 
+.explore-section {
+  padding: clamp(92px, 12vw, 140px) 0;
+  scroll-margin-top: 110px;
+  border-top: 1px solid var(--border-strong);
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 42px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--border);
+  gap: 1px;
+  box-shadow: var(--shadow);
+}
+
+.explore-card {
+  position: relative;
+  min-height: 220px;
+  padding: 26px;
+  background: var(--surface);
+  color: var(--foreground);
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+
+.explore-card:hover {
+  background: var(--surface-muted);
+}
+
+.explore-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-muted);
+}
+
+.explore-icon svg,
+.explore-card-arrow svg {
+  width: 18px;
+}
+
+.explore-card-arrow {
+  position: absolute;
+  top: 28px;
+  right: 26px;
+  color: var(--muted);
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.explore-card:hover .explore-card-arrow {
+  transform: translate(2px, -2px);
+  color: var(--foreground);
+}
+
+.explore-card h3 {
+  margin: 38px 0 0;
+  font-size: 16px;
+  letter-spacing: -0.025em;
+}
+
+.explore-card p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .landing-cta {
   display: flex;
   align-items: center;
@@ -517,14 +525,6 @@
 }
 
 @media (max-width: 900px) {
-  .landing-header {
-    grid-template-columns: 1fr auto;
-  }
-
-  .landing-nav {
-    display: none;
-  }
-
   .feature-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -539,38 +539,13 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
+  .explore-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 620px) {
-  .landing-header {
-    top: max(8px, env(safe-area-inset-top));
-    width: calc(100% - 20px);
-    min-height: 60px;
-    margin-top: 10px;
-    padding: 8px 9px 8px 12px;
-    border-radius: 12px;
-  }
-
-  .landing-brand span {
-    font-size: 15px;
-  }
-
-  .landing-brand img {
-    width: 32px;
-    height: 32px;
-  }
-
-  .landing-theme-toggle {
-    width: 40px;
-    height: 40px;
-  }
-
-  .landing-open-button {
-    min-height: 40px;
-    padding: 0 13px;
-    font-size: 13px;
-  }
-
   .landing-page main {
     width: min(calc(100% - 28px), 1120px);
   }
@@ -597,7 +572,8 @@
   }
 
   .benefit-grid,
-  .feature-grid {
+  .feature-grid,
+  .explore-grid {
     grid-template-columns: 1fr;
   }
 
@@ -607,6 +583,10 @@
   }
 
   .feature-card {
+    min-height: 190px;
+  }
+
+  .explore-card {
     min-height: 190px;
   }
 

@@ -1,11 +1,15 @@
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
+  ArrowUpRight,
   Bookmark,
+  BookOpen,
   Check,
   Download,
+  FileText,
   Folder,
   Globe2,
+  HelpCircle,
   LayoutGrid,
   Search,
   ShieldCheck,
@@ -13,8 +17,8 @@ import {
   Tags,
   Zap,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { AppFooter } from "@/components/layout/AppFooter";
+import { PublicHeader } from "@/components/layout/PublicHeader";
 import "./LandingPage.css";
 
 const benefits = [
@@ -104,6 +108,45 @@ const questions = [
   },
 ];
 
+const explorePages: { icon: LucideIcon; title: string; description: string; href: string }[] = [
+  {
+    icon: LayoutGrid,
+    title: "Features",
+    description: "Explore every tool available for organizing and finding links.",
+    href: "/features",
+  },
+  {
+    icon: BookOpen,
+    title: "Guide",
+    description: "Learn how to build and manage your personal link library.",
+    href: "/guide",
+  },
+  {
+    icon: Download,
+    title: "Installation",
+    description: "Install LinkVault on supported mobile and desktop browsers.",
+    href: "/install",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Privacy",
+    description: "Understand how LinkVault keeps your saved library local.",
+    href: "/privacy",
+  },
+  {
+    icon: HelpCircle,
+    title: "FAQ",
+    description: "Find answers about accounts, storage, privacy, and installation.",
+    href: "/faq",
+  },
+  {
+    icon: FileText,
+    title: "Terms",
+    description: "Read the terms and conditions for using LinkVault.",
+    href: "/terms",
+  },
+];
+
 export function LandingPage() {
   return (
     <div className="landing-page">
@@ -111,26 +154,7 @@ export function LandingPage() {
         Skip to content
       </a>
 
-      <header className="landing-header">
-        <a className="landing-brand" href="/" aria-label="LinkVault home">
-          <img src="/pwa-icon-512.png" width="34" height="34" alt="" />
-          <span>LinkVault</span>
-        </a>
-
-        <nav className="landing-nav" aria-label="Landing page">
-          <a href="#features">Features</a>
-          <a href="#guide">How it works</a>
-          <a href="#privacy">Privacy</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-
-        <div className="landing-header-actions">
-          <ThemeToggle className="landing-theme-toggle" />
-          <a className="button button-primary landing-open-button" href="/app">
-            Open LinkVault
-          </a>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main id="main-content">
         <section className="landing-hero">
@@ -257,6 +281,32 @@ export function LandingPage() {
                 </summary>
                 <p>{answer}</p>
               </details>
+            ))}
+          </div>
+        </section>
+
+        <section className="explore-section" id="learn-more">
+          <div className="landing-section-heading">
+            <p className="landing-eyebrow">Explore LinkVault</p>
+            <h2>Everything you need to know, in one place.</h2>
+            <p>
+              Read detailed guides for using LinkVault, understanding your privacy, and installing
+              it anywhere.
+            </p>
+          </div>
+
+          <div className="explore-grid">
+            {explorePages.map(({ icon: Icon, title, description, href }) => (
+              <a className="explore-card" href={href} key={title}>
+                <span className="explore-icon">
+                  <Icon aria-hidden="true" />
+                </span>
+                <span className="explore-card-arrow">
+                  <ArrowUpRight aria-hidden="true" />
+                </span>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </a>
             ))}
           </div>
         </section>
