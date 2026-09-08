@@ -1,5 +1,6 @@
 import { Menu, Plus, Search } from "lucide-react";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
+import "./AppHeader.css";
 
 type AppHeaderProps = {
   searchQuery: string;

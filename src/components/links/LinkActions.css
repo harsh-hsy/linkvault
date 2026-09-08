@@ -1,0 +1,62 @@
+.link-actions {
+  display: flex;
+  margin: -3px -4px 0 0;
+}
+
+.favorite-button.is-favorite {
+  color: #eab308;
+}
+
+.action-menu {
+  position: relative;
+}
+
+.action-menu summary {
+  list-style: none;
+}
+
+.action-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.action-menu > div {
+  position: absolute;
+  top: 38px;
+  right: 0;
+  z-index: 10;
+  width: 150px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.action-menu a,
+.action-menu button {
+  display: flex;
+  width: 100%;
+  height: 34px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.action-menu a:hover,
+.action-menu button:hover {
+  background: var(--surface-hover);
+}
+
+.action-menu svg {
+  width: 15px;
+}
+
+.action-menu .delete-action {
+  color: var(--danger);
+}

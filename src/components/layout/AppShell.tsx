@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Grid2X2, Link2, List, Pencil, Trash2 } from "lucide-react";
+import "./AppShell.css";
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { CollectionDialog } from "@/components/collections/CollectionDialog";
 import { AppFooter } from "@/components/layout/AppFooter";

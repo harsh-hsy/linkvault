@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Folder } from "lucide-react";
+import "./CollectionSelect.css";
 
 type CollectionSelectProps = {
   collections: string[];

@@ -1,0 +1,30 @@
+.app-footer {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 20px clamp(16px, 3vw, 32px);
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+.app-footer a {
+  color: var(--foreground);
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .app-footer {
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+  }
+}

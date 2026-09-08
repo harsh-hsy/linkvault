@@ -5,6 +5,7 @@ import { PlatformPicker } from "@/components/links/PlatformPicker";
 import { getPlatform, type Platform } from "@/data/platforms";
 import { buildProfileUrl, normalizeUrl } from "@/lib/url";
 import type { LinkDraft, SavedLink } from "@/types/link";
+import "./AddLinkDialog.css";
 
 type DialogStep = "platform" | "details";
 type InputMode = "username" | "url";

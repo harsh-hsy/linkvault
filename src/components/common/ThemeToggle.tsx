@@ -1,4 +1,5 @@
 import { Moon, Sun } from "lucide-react";
+import "./ThemeToggle.css";
 
 type ThemeToggleProps = {
   className?: string;

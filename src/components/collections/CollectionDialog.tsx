@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { FolderPlus, X } from "lucide-react";
+import "./CollectionDialog.css";
 
 type CollectionDialogProps = {
   currentName?: string;

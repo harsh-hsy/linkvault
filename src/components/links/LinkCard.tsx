@@ -3,6 +3,7 @@ import { WebsiteFavicon } from "@/components/links/WebsiteFavicon";
 import { getPlatform } from "@/data/platforms";
 import { getDisplayUrl } from "@/lib/url";
 import type { SavedLink } from "@/types/link";
+import "./LinkCard.css";
 
 type LinkCardProps = {
   link: SavedLink;

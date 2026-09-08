@@ -1,8 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "./styles/tokens.css";
+import "./styles/globals.css";
+import "./styles/controls.css";
+import "./styles/dialogs.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { LandingPage } from "@/pages/LandingPage";
-import "./styles/globals.css";
 
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const isAppRoute = currentPath === "/app";

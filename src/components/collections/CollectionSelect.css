@@ -1,0 +1,112 @@
+.collection-field {
+  position: relative;
+  z-index: 3;
+}
+
+.collection-select-control {
+  position: relative;
+}
+
+.collection-select-trigger {
+  display: grid;
+  width: 100%;
+  height: 40px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  font-size: 14px;
+  text-align: left;
+}
+
+.collection-select-trigger:hover,
+.collection-select-trigger[aria-expanded="true"] {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.collection-select-trigger > svg:first-child {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+}
+
+.collection-select-trigger > svg:last-child {
+  width: 15px;
+  height: 15px;
+  color: var(--muted);
+  transition: transform 160ms ease;
+}
+
+.collection-select-trigger[aria-expanded="true"] > svg:last-child {
+  transform: rotate(180deg);
+}
+
+.collection-select-trigger .is-placeholder {
+  color: var(--muted);
+}
+
+.collection-options {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  left: 0;
+  z-index: 20;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface);
+  box-shadow: 0 18px 45px rgb(0 0 0 / 22%);
+  animation: options-in 140ms ease-out;
+}
+
+.collection-options button {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  font-size: 13px;
+  text-align: left;
+}
+
+.collection-options button:hover,
+.collection-options button.is-selected {
+  background: var(--surface-hover);
+}
+
+.collection-options button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collection-options button svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+}
+
+@keyframes options-in {
+  from {
+    transform: translateY(-4px);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .collection-select-trigger {
+    font-size: 16px;
+  }
+}

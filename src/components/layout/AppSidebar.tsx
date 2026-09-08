@@ -1,5 +1,6 @@
 import { Archive, Info, Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import type { SavedLink } from "@/types/link";
+import "./AppSidebar.css";
 
 export type LibraryView =
   | { type: "all" }

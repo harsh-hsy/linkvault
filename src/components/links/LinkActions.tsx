@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Copy, ExternalLink, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
 import type { SavedLink } from "@/types/link";
+import "./LinkActions.css";
 
 type LinkActionsProps = {
   link: SavedLink;

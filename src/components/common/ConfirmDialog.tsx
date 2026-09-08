@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { AlertTriangle } from "lucide-react";
+import "./ConfirmDialog.css";
 
 type ConfirmDialogProps = {
   title: string;

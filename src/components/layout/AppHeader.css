@@ -1,0 +1,119 @@
+.app-header {
+  --header-control-size: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  height: 65px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 clamp(16px, 3vw, 32px);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--background) 90%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.app-header .button {
+  height: var(--header-control-size);
+}
+
+.app-header .icon-button {
+  width: var(--header-control-size);
+  height: var(--header-control-size);
+}
+
+.search-field {
+  position: relative;
+  width: min(560px, 100%);
+  min-width: 0;
+  margin-right: auto;
+}
+
+.search-field svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 16px;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+
+.search-field input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px 0 38px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  font-size: 14px;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.app-header .search-field input {
+  height: var(--header-control-size);
+}
+
+.search-field input::placeholder {
+  color: var(--muted);
+}
+
+.search-field input:focus {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--foreground) 7%, transparent);
+  outline: none;
+}
+
+.add-link-button {
+  min-width: 96px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.add-link-button span {
+  white-space: nowrap;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .app-header {
+    --header-control-size: 42px;
+    height: calc(65px + env(safe-area-inset-top));
+    gap: 10px;
+    padding-top: env(safe-area-inset-top);
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-left: max(16px, env(safe-area-inset-left));
+  }
+
+  .mobile-menu {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 620px) {
+  .add-link-button {
+    width: var(--header-control-size);
+    min-width: var(--header-control-size);
+    flex-basis: var(--header-control-size);
+    padding: 0;
+    border-radius: 10px;
+  }
+
+  .add-link-button span {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-header {
+    gap: 7px;
+  }
+
+  .search-field input {
+    font-size: 16px;
+  }
+}

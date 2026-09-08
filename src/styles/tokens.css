@@ -1,0 +1,43 @@
+:root {
+  color-scheme: light;
+  font-family: "Geist", Inter, system-ui, sans-serif;
+  font-synthesis: none;
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-muted: #f3f3f3;
+  --surface-hover: #ebebeb;
+  --foreground: #171717;
+  --muted: #737373;
+  --border: #e5e5e5;
+  --border-strong: #d4d4d4;
+  --focus-ring: rgb(23 23 23 / 12%);
+  --sidebar: #f6f6f6;
+  --button-foreground: #fafafa;
+  --danger: #dc2626;
+  --shadow: 0 14px 36px rgb(0 0 0 / 7%);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0a0a0a;
+  --surface: #111111;
+  --surface-muted: #181818;
+  --surface-hover: #202020;
+  --foreground: #ededed;
+  --muted: #8b8b8b;
+  --border: #262626;
+  --border-strong: #383838;
+  --focus-ring: rgb(237 237 237 / 14%);
+  --sidebar: #0e0e0e;
+  --button-foreground: #171717;
+  --danger: #f87171;
+  --shadow: 0 16px 40px rgb(0 0 0 / 32%);
+}
+
+:root[data-theme="dark"] .moon-icon {
+  display: none;
+}
+
+:root[data-theme="dark"] .sun-icon {
+  display: block;
+}

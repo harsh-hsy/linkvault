@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, Globe2, Search } from "lucide-react";
 import { platforms, type Platform } from "@/data/platforms";
+import "./PlatformPicker.css";
 
 type PlatformPickerProps = {
   onSelect: (platform: Platform) => void;

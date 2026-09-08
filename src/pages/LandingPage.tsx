@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { AppFooter } from "@/components/layout/AppFooter";
-import "@/styles/landing.css";
+import "./LandingPage.css";
 
 const benefits = [
   "Save everything in one place",
