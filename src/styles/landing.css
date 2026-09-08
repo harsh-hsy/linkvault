@@ -1,6 +1,6 @@
 .landing-page {
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: clip;
   background:
     linear-gradient(var(--border) 1px, transparent 1px),
     linear-gradient(90deg, var(--border) 1px, transparent 1px), var(--background);
@@ -40,7 +40,7 @@
 
 .landing-header {
   position: sticky;
-  top: 0;
+  top: 16px;
   z-index: 20;
   display: grid;
   width: min(calc(100% - 32px), 1180px);
@@ -543,6 +543,7 @@
 
 @media (max-width: 620px) {
   .landing-header {
+    top: max(8px, env(safe-area-inset-top));
     width: calc(100% - 20px);
     min-height: 60px;
     margin-top: 10px;
