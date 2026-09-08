@@ -20,6 +20,7 @@ import {
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import { SkipLink } from "@/components/common/SkipLink";
+import { landingFaqs } from "@/data/faq";
 import "./LandingPage.css";
 
 const benefits = [
@@ -76,37 +77,6 @@ const steps = [
   ["Add context", "Choose a collection, add tags, and leave a short note."],
   ["Keep it useful", "Favorite important links and update details whenever you need."],
   ["Find it instantly", "Search or filter your library and open the right link."],
-];
-
-const questions = [
-  {
-    question: "Is LinkVault free to use?",
-    answer: "Yes. LinkVault is a free browser-based tool with no account or subscription.",
-  },
-  {
-    question: "Do I need to create an account?",
-    answer: "No. You can start saving and organizing links immediately without signing in.",
-  },
-  {
-    question: "Where are my links stored?",
-    answer:
-      "Your saved links and collections are stored in this browser using local storage. They are not saved to a LinkVault backend.",
-  },
-  {
-    question: "Are my links synced between devices?",
-    answer:
-      "Not currently. Each browser keeps its own local library, so links do not automatically sync across devices.",
-  },
-  {
-    question: "What happens if I clear browser data?",
-    answer:
-      "Clearing site data can remove your LinkVault library. A dedicated backup and restore flow is planned.",
-  },
-  {
-    question: "Can I install LinkVault on my phone?",
-    answer:
-      "Yes. Supported browsers can install LinkVault to your home screen and open it like a standalone app.",
-  },
 ];
 
 const explorePages: { icon: LucideIcon; title: string; description: string; href: string }[] = [
@@ -272,7 +242,7 @@ export function LandingPage() {
           </div>
 
           <div className="faq-list">
-            {questions.map(({ question, answer }) => (
+            {landingFaqs.map(({ question, answer }) => (
               <details key={question}>
                 <summary>
                   {question}
