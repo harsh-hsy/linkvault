@@ -33,6 +33,12 @@
   box-shadow: var(--shadow);
 }
 
+.action-menu > div.is-collection-menu {
+  width: 190px;
+  max-height: 270px;
+  overflow-y: auto;
+}
+
 .action-menu a,
 .action-menu button {
   display: flex;
@@ -60,4 +66,25 @@
 
 .action-menu .delete-action {
   color: var(--danger);
+}
+
+.action-menu .move-menu-heading {
+  font-weight: 600;
+}
+
+.action-menu-divider {
+  display: block;
+  height: 1px;
+  margin: 4px;
+  background: var(--border);
+}
+
+.action-menu .move-option {
+  justify-content: space-between;
+}
+
+.move-option span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

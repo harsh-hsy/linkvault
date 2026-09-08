@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, ChevronDown, Folder } from "lucide-react";
+import { Check, ChevronDown, Folder, Plus } from "lucide-react";
 import "./CollectionSelect.css";
 export function CollectionSelect({ collections, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+  const [newCollection, setNewCollection] = useState("");
   const containerRef = useRef(null);
   useEffect(() => {
     function closeMenu(event) {
@@ -21,6 +23,17 @@ export function CollectionSelect({ collections, value, onChange }) {
   function selectCollection(name) {
     onChange(name);
     setIsOpen(false);
+    setIsCreating(false);
+    setNewCollection("");
+  }
+  function createCollection(event) {
+    event.preventDefault();
+    const cleanName = newCollection.trim();
+    if (!cleanName) return;
+    const existingCollection = collections.find(
+      (name) => name.toLowerCase() === cleanName.toLowerCase(),
+    );
+    selectCollection(existingCollection ?? cleanName);
   }
   return (
     <div className="collection-select-control" ref={containerRef}>
@@ -32,7 +45,7 @@ export function CollectionSelect({ collections, value, onChange }) {
         onClick={() => setIsOpen((currentValue) => !currentValue)}
       >
         <Folder aria-hidden="true" />
-        <span className={value ? "" : "is-placeholder"}>{value || "Choose a collection"}</span>
+        <span>{value || "All links"}</span>
         <ChevronDown aria-hidden="true" />
       </button>
 
@@ -45,7 +58,7 @@ export function CollectionSelect({ collections, value, onChange }) {
             aria-selected={!value}
             onClick={() => selectCollection("")}
           >
-            <span>No collection</span>
+            <span>All links</span>
             {!value && <Check aria-hidden="true" />}
           </button>
           {collections.map((name) => (
@@ -61,6 +74,35 @@ export function CollectionSelect({ collections, value, onChange }) {
               {value === name && <Check aria-hidden="true" />}
             </button>
           ))}
+
+          <div className="collection-create">
+            {isCreating ? (
+              <div className="collection-create-entry">
+                <input
+                  autoFocus
+                  value={newCollection}
+                  aria-label="New collection name"
+                  placeholder="Collection name"
+                  onChange={(event) => setNewCollection(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") createCollection(event);
+                  }}
+                />
+                <button type="button" disabled={!newCollection.trim()} onClick={createCollection}>
+                  Add
+                </button>
+              </div>
+            ) : (
+              <button
+                className="collection-create-button"
+                type="button"
+                onClick={() => setIsCreating(true)}
+              >
+                <Plus aria-hidden="true" />
+                <span>New collection</span>
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

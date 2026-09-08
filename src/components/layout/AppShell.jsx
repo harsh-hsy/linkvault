@@ -19,6 +19,7 @@ export function AppShell() {
     toggleFavorite,
     renameCollection: renameLinksCollection,
     clearCollection,
+    moveLink,
   } = useLinks();
   const {
     savedCollections,
@@ -148,6 +149,10 @@ export function AppShell() {
       showMessage("Could not copy URL");
     }
   }
+  function moveLinkToCollection(link, collection) {
+    moveLink(link.id, collection);
+    showMessage(collection ? `Moved to ${collection}` : "Moved to All links");
+  }
   function showMessage(nextMessage) {
     setMessage(nextMessage);
     window.setTimeout(() => setMessage(""), 2200);
@@ -254,9 +259,11 @@ export function AppShell() {
                 <LinkCard
                   key={link.id}
                   link={link}
+                  collections={collections}
                   onCopy={copyLink}
                   onDelete={requestLinkDelete}
                   onEdit={openEditForm}
+                  onMove={moveLinkToCollection}
                   onToggleFavorite={toggleFavorite}
                 />
               ))}

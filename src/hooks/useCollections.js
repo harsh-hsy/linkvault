@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
 const storageKey = "linkvault-collections";
+const defaultsKey = "linkvault-default-collections-added";
+const homeMigrationKey = "linkvault-home-collection-migrated";
+const defaultCollections = ["Work", "Personal", "Learning", "Social", "Documents", "Shared"];
+
 function readStoredCollections() {
   try {
     const storedValue = localStorage.getItem(storageKey);
     const parsedValue = storedValue ? JSON.parse(storedValue) : [];
-    if (!Array.isArray(parsedValue)) return [];
-    return parsedValue.filter((value) => typeof value === "string" && Boolean(value));
+    let savedCollections = Array.isArray(parsedValue)
+      ? parsedValue.filter((value) => typeof value === "string" && Boolean(value))
+      : [];
+
+    if (!localStorage.getItem(homeMigrationKey)) {
+      savedCollections = savedCollections.filter((name) => name.toLowerCase() !== "home");
+      localStorage.setItem(homeMigrationKey, "true");
+    }
+
+    if (localStorage.getItem(defaultsKey)) return savedCollections;
+
+    localStorage.setItem(defaultsKey, "true");
+    return [
+      ...new Map(
+        [...savedCollections, ...defaultCollections].map((name) => [name.toLowerCase(), name]),
+      ).values(),
+    ];
   } catch {
-    return [];
+    return defaultCollections;
   }
 }
 export function useCollections() {

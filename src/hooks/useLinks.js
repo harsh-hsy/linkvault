@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 const storageKey = "linkvault-links";
+const homeMigrationKey = "linkvault-home-links-migrated";
 function isSavedLink(value) {
   if (!value || typeof value !== "object") return false;
   const link = value;
@@ -21,7 +22,14 @@ function readStoredLinks() {
   try {
     const storedValue = localStorage.getItem(storageKey);
     const parsedValue = storedValue ? JSON.parse(storedValue) : [];
-    return Array.isArray(parsedValue) ? parsedValue.filter(isSavedLink) : [];
+    const savedLinks = Array.isArray(parsedValue) ? parsedValue.filter(isSavedLink) : [];
+
+    if (localStorage.getItem(homeMigrationKey)) return savedLinks;
+
+    localStorage.setItem(homeMigrationKey, "true");
+    return savedLinks.map((link) =>
+      link.collection.toLowerCase() === "home" ? { ...link, collection: "" } : link,
+    );
   } catch {
     return [];
   }
@@ -78,6 +86,13 @@ export function useLinks() {
       ),
     );
   }
+  function moveLink(linkId, collection) {
+    setLinks((currentLinks) =>
+      currentLinks.map((link) =>
+        link.id === linkId ? { ...link, collection, updatedAt: new Date().toISOString() } : link,
+      ),
+    );
+  }
   return {
     links,
     addLink,
@@ -86,5 +101,6 @@ export function useLinks() {
     toggleFavorite,
     renameCollection,
     clearCollection,
+    moveLink,
   };
 }

@@ -1,4 +1,5 @@
-import { Archive, Info, Pencil, Plus, Star, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Archive, Info, MoreHorizontal, Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import "./AppSidebar.css";
 export function AppSidebar({
   links,
@@ -11,7 +12,17 @@ export function AppSidebar({
   onDeleteCollection,
   onClose,
 }) {
+  const [openCollectionMenu, setOpenCollectionMenu] = useState("");
   const favoriteCount = links.filter((link) => link.isFavorite).length;
+
+  useEffect(() => {
+    function closeCollectionMenu(event) {
+      if (!event.target.closest(".collection-actions-menu")) setOpenCollectionMenu("");
+    }
+
+    document.addEventListener("pointerdown", closeCollectionMenu);
+    return () => document.removeEventListener("pointerdown", closeCollectionMenu);
+  }, []);
   return (
     <>
       {isOpen && (
@@ -104,6 +115,46 @@ export function AppSidebar({
                     >
                       <Trash2 aria-hidden="true" />
                     </button>
+                  </div>
+                  <div className="collection-actions-menu">
+                    <button
+                      className="collection-menu-trigger"
+                      type="button"
+                      aria-label={`Manage ${collection}`}
+                      aria-expanded={openCollectionMenu === collection}
+                      onClick={() =>
+                        setOpenCollectionMenu((currentMenu) =>
+                          currentMenu === collection ? "" : collection,
+                        )
+                      }
+                    >
+                      <MoreHorizontal aria-hidden="true" />
+                    </button>
+                    {openCollectionMenu === collection && (
+                      <div className="collection-menu-popover">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setOpenCollectionMenu("");
+                            onEditCollection(collection);
+                          }}
+                        >
+                          <Pencil aria-hidden="true" />
+                          Edit
+                        </button>
+                        <button
+                          className="delete-action"
+                          type="button"
+                          onClick={() => {
+                            setOpenCollectionMenu("");
+                            onDeleteCollection(collection);
+                          }}
+                        >
+                          <Trash2 aria-hidden="true" />
+                          Delete
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))

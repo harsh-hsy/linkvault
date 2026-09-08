@@ -3,7 +3,15 @@ import { WebsiteFavicon } from "@/components/links/WebsiteFavicon";
 import { getPlatform } from "@/data/platforms";
 import { getDisplayUrl } from "@/lib/url";
 import "./LinkCard.css";
-export function LinkCard({ link, onCopy, onDelete, onEdit, onToggleFavorite }) {
+export function LinkCard({
+  link,
+  collections,
+  onCopy,
+  onDelete,
+  onEdit,
+  onMove,
+  onToggleFavorite,
+}) {
   const platform = getPlatform(link.platformId);
   const PlatformIcon = platform.icon;
   return (
@@ -26,9 +34,11 @@ export function LinkCard({ link, onCopy, onDelete, onEdit, onToggleFavorite }) {
 
         <LinkActions
           link={link}
+          collections={collections}
           onCopy={onCopy}
           onDelete={onDelete}
           onEdit={onEdit}
+          onMove={onMove}
           onToggleFavorite={onToggleFavorite}
         />
       </div>
