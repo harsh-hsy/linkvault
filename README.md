@@ -134,3 +134,7 @@ The `public/_redirects` file sends direct route requests back to the React appli
 ## Author
 
 Made by [Harsh Singh](https://harsh-hsy.onrender.com).
+
+## License
+
+LinkVault is available under the [MIT License](LICENSE).
