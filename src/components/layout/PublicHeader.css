@@ -42,7 +42,15 @@
 }
 
 .public-nav {
-  gap: 22px;
+  gap: clamp(14px, 1.4vw, 22px);
+}
+
+.page-header {
+  width: min(calc(100% - 32px), 1280px);
+}
+
+.page-header .public-nav {
+  gap: clamp(12px, 1.25vw, 20px);
 }
 
 .public-nav a {
