@@ -1,4 +1,4 @@
-import { Archive, Pencil, Plus, Star, Trash2, X } from "lucide-react";
+import { Archive, Info, Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import type { SavedLink } from "@/types/link";
 
 export type LibraryView =
@@ -44,17 +44,12 @@ export function AppSidebar({
 
       <aside className={`sidebar ${isOpen ? "is-open" : ""}`}>
         <div className="brand-row">
-          <div className="brand">
+          <a className="brand" href="/">
             <span className="brand-mark">
-              <img
-                src="/pwa-icon-512.png"
-                width="32"
-                height="32"
-                alt=""
-              />
+              <img src="/pwa-icon-512.png" width="32" height="32" alt="" />
             </span>
             <span>LinkVault</span>
-          </div>
+          </a>
           <button
             className="icon-button sidebar-close"
             type="button"
@@ -136,6 +131,11 @@ export function AppSidebar({
             )}
           </div>
         </nav>
+
+        <a className="sidebar-about-link" href="/">
+          <Info aria-hidden="true" />
+          About LinkVault
+        </a>
 
         <div className="privacy-note">
           <strong>Private by design</strong>

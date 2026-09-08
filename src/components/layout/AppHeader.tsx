@@ -1,4 +1,5 @@
-import { Menu, Moon, Plus, Search, Sun } from "lucide-react";
+import { Menu, Plus, Search } from "lucide-react";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 type AppHeaderProps = {
   searchQuery: string;
@@ -8,17 +9,6 @@ type AppHeaderProps = {
 };
 
 export function AppHeader({ searchQuery, onSearchChange, onAddLink, onMenuClick }: AppHeaderProps) {
-  function toggleTheme() {
-    const root = document.documentElement;
-    const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
-
-    root.dataset.theme = nextTheme;
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", nextTheme === "dark" ? "#0a0a0a" : "#fafafa");
-    localStorage.setItem("linkvault-theme", nextTheme);
-  }
-
   return (
     <header className="app-header">
       <button
@@ -41,15 +31,7 @@ export function AppHeader({ searchQuery, onSearchChange, onAddLink, onMenuClick 
         />
       </label>
 
-      <button
-        className="icon-button"
-        type="button"
-        aria-label="Toggle color theme"
-        onClick={toggleTheme}
-      >
-        <Moon className="moon-icon" aria-hidden="true" />
-        <Sun className="sun-icon" aria-hidden="true" />
-      </button>
+      <ThemeToggle />
 
       <button className="button button-primary add-link-button" type="button" onClick={onAddLink}>
         <Plus aria-hidden="true" />

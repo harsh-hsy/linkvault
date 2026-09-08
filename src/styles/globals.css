@@ -133,9 +133,11 @@ summary:focus-visible {
 
 .brand {
   gap: 10px;
+  color: var(--foreground);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.025em;
+  text-decoration: none;
 }
 
 .brand-mark {
@@ -156,6 +158,31 @@ summary:focus-visible {
 .sidebar-nav {
   flex: 1;
   margin-top: 20px;
+}
+
+.sidebar-about-link {
+  display: flex;
+  height: 36px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: none;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.sidebar-about-link:hover {
+  background: var(--surface-hover);
+  color: var(--foreground);
+}
+
+.sidebar-about-link svg {
+  width: 16px;
 }
 
 .sidebar-item {

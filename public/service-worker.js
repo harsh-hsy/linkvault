@@ -1,6 +1,7 @@
-const cacheName = "linkvault-app-v5";
+const cacheName = "linkvault-app-v6";
 const appShell = [
   "/",
+  "/app",
   "/manifest.webmanifest",
   "/favicon-16.png",
   "/favicon-32.png",
@@ -36,14 +37,16 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
+    const fallbackPath = url.pathname.startsWith("/app") ? "/app" : "/";
+
     event.respondWith(
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(cacheName).then((cache) => cache.put("/", copy));
+          caches.open(cacheName).then((cache) => cache.put(fallbackPath, copy));
           return response;
         })
-        .catch(() => caches.match("/")),
+        .catch(() => caches.match(fallbackPath)),
     );
     return;
   }
