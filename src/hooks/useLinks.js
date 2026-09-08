@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import type { LinkDraft, SavedLink } from "@/types/link";
-
 const storageKey = "linkvault-links";
-
-function isSavedLink(value: unknown): value is SavedLink {
+function isSavedLink(value) {
   if (!value || typeof value !== "object") return false;
-
-  const link = value as Partial<SavedLink>;
+  const link = value;
   return (
     typeof link.id === "string" &&
     typeof link.title === "string" &&
@@ -21,50 +17,41 @@ function isSavedLink(value: unknown): value is SavedLink {
     typeof link.updatedAt === "string"
   );
 }
-
-function readStoredLinks(): SavedLink[] {
+function readStoredLinks() {
   try {
     const storedValue = localStorage.getItem(storageKey);
-    const parsedValue: unknown = storedValue ? JSON.parse(storedValue) : [];
-
+    const parsedValue = storedValue ? JSON.parse(storedValue) : [];
     return Array.isArray(parsedValue) ? parsedValue.filter(isSavedLink) : [];
   } catch {
     return [];
   }
 }
-
 export function useLinks() {
-  const [links, setLinks] = useState<SavedLink[]>(readStoredLinks);
-
+  const [links, setLinks] = useState(readStoredLinks);
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(links));
   }, [links]);
-
-  function addLink(draft: LinkDraft) {
+  function addLink(draft) {
     const timestamp = new Date().toISOString();
-    const link: SavedLink = {
+    const link = {
       ...draft,
       id: crypto.randomUUID(),
       createdAt: timestamp,
       updatedAt: timestamp,
     };
-
     setLinks((currentLinks) => [link, ...currentLinks]);
   }
-
-  function updateLink(linkId: string, draft: LinkDraft) {
+  function updateLink(linkId, draft) {
     setLinks((currentLinks) =>
       currentLinks.map((link) =>
         link.id === linkId ? { ...link, ...draft, updatedAt: new Date().toISOString() } : link,
       ),
     );
   }
-
-  function deleteLink(linkId: string) {
+  function deleteLink(linkId) {
     setLinks((currentLinks) => currentLinks.filter((link) => link.id !== linkId));
   }
-
-  function toggleFavorite(linkId: string) {
+  function toggleFavorite(linkId) {
     setLinks((currentLinks) =>
       currentLinks.map((link) =>
         link.id === linkId
@@ -73,8 +60,7 @@ export function useLinks() {
       ),
     );
   }
-
-  function renameCollection(currentName: string, nextName: string) {
+  function renameCollection(currentName, nextName) {
     setLinks((currentLinks) =>
       currentLinks.map((link) =>
         link.collection === currentName
@@ -83,8 +69,7 @@ export function useLinks() {
       ),
     );
   }
-
-  function clearCollection(name: string) {
+  function clearCollection(name) {
     setLinks((currentLinks) =>
       currentLinks.map((link) =>
         link.collection === name
@@ -93,7 +78,6 @@ export function useLinks() {
       ),
     );
   }
-
   return {
     links,
     addLink,

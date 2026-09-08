@@ -1,4 +1,3 @@
-import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   Download,
@@ -16,14 +15,7 @@ import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import { SkipLink } from "@/components/common/SkipLink";
 import "./FeaturesPage.css";
-
-type Feature = {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-};
-
-const organizeFeatures: Feature[] = [
+const organizeFeatures = [
   {
     icon: Folder,
     title: "Collections",
@@ -41,8 +33,7 @@ const organizeFeatures: Feature[] = [
     description: "Mark frequently used resources and reach them from a dedicated favorites view.",
   },
 ];
-
-const findFeatures: Feature[] = [
+const findFeatures = [
   {
     icon: Search,
     title: "Instant search",
@@ -59,8 +50,7 @@ const findFeatures: Feature[] = [
     description: "Store a short note with every link so you remember why it was worth saving.",
   },
 ];
-
-const platformFeatures: Feature[] = [
+const platformFeatures = [
   {
     icon: Globe2,
     title: "Platform picker",
@@ -78,20 +68,7 @@ const platformFeatures: Feature[] = [
     description: "Use the same calm matte interface in the appearance that feels most comfortable.",
   },
 ];
-
-function FeatureGroup({
-  number,
-  eyebrow,
-  title,
-  description,
-  features,
-}: {
-  number: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  features: Feature[];
-}) {
+function FeatureGroup({ number, eyebrow, title, description, features }) {
   return (
     <section className="feature-group">
       <div className="feature-group-heading">
@@ -117,7 +94,6 @@ function FeatureGroup({
     </section>
   );
 }
-
 export function FeaturesPage() {
   return (
     <div className="features-page">

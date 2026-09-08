@@ -1,5 +1,6 @@
 .link-actions {
   display: flex;
+  flex: 0 0 auto;
   margin: -3px -4px 0 0;
 }
 

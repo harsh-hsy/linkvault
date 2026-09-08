@@ -1,27 +1,15 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Check, Star, X } from "lucide-react";
 import { CollectionSelect } from "@/components/collections/CollectionSelect";
 import { PlatformPicker } from "@/components/links/PlatformPicker";
-import { getPlatform, type Platform } from "@/data/platforms";
+import { getPlatform } from "@/data/platforms";
 import { buildProfileUrl, normalizeUrl } from "@/lib/url";
-import type { LinkDraft, SavedLink } from "@/types/link";
 import "./AddLinkDialog.css";
-
-type DialogStep = "platform" | "details";
-type InputMode = "username" | "url";
-
-type AddLinkDialogProps = {
-  collections: string[];
-  link?: SavedLink;
-  onClose: () => void;
-  onSave: (draft: LinkDraft) => void;
-};
-
-export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDialogProps) {
+export function AddLinkDialog({ collections, link, onClose, onSave }) {
   const initialPlatform = getPlatform(link?.platformId ?? "custom");
-  const [step, setStep] = useState<DialogStep>(link ? "details" : "platform");
+  const [step, setStep] = useState(link ? "details" : "platform");
   const [platform, setPlatform] = useState(initialPlatform);
-  const [inputMode, setInputMode] = useState<InputMode>("url");
+  const [inputMode, setInputMode] = useState("url");
   const [address, setAddress] = useState(link?.url ?? "");
   const [title, setTitle] = useState(link?.title ?? "");
   const [collection, setCollection] = useState(link?.collection ?? "");
@@ -30,28 +18,23 @@ export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDia
   const [isFavorite, setIsFavorite] = useState(link?.isFavorite ?? false);
   const [error, setError] = useState("");
   const PlatformIcon = platform.icon;
-
   useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
+    function closeOnEscape(event) {
       if (event.key === "Escape") onClose();
     }
-
     document.addEventListener("keydown", closeOnEscape);
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [onClose]);
-
-  function choosePlatform(selectedPlatform: Platform) {
+  function choosePlatform(selectedPlatform) {
     setPlatform(selectedPlatform);
     setInputMode(selectedPlatform.profileBaseUrl ? "username" : "url");
     if (!link) setAddress("");
     setError("");
     setStep("details");
   }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event) {
     event.preventDefault();
     setError("");
-
     try {
       const url =
         inputMode === "username" && platform.profileBaseUrl
@@ -61,7 +44,6 @@ export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDia
         .split(",")
         .map((tag) => tag.trim().replace(/^#/, ""))
         .filter(Boolean);
-
       onSave({
         title: title.trim(),
         url,
@@ -75,7 +57,6 @@ export function AddLinkDialog({ collections, link, onClose, onSave }: AddLinkDia
       setError(caughtError instanceof Error ? caughtError.message : "Enter a valid link.");
     }
   }
-
   return (
     <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}>
       <section

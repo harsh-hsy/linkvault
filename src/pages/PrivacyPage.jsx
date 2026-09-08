@@ -1,4 +1,3 @@
-import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   Check,
@@ -17,15 +16,7 @@ import { SkipLink } from "@/components/common/SkipLink";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import "./PrivacyPage.css";
-
-type LocalItem = {
-  icon: LucideIcon;
-  title: string;
-  storageKey: string;
-  description: string;
-};
-
-const localItems: LocalItem[] = [
+const localItems = [
   {
     icon: Database,
     title: "Saved links",
@@ -45,7 +36,6 @@ const localItems: LocalItem[] = [
     description: "Your selected light or dark appearance.",
   },
 ];
-
 const networkEvents = [
   {
     icon: Globe2,
@@ -66,7 +56,6 @@ const networkEvents = [
       "LinkVault writes a saved URL to your clipboard only after you choose Copy URL. It does not read clipboard contents.",
   },
 ];
-
 export function PrivacyPage() {
   return (
     <div className="privacy-page">

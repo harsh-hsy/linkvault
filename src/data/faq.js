@@ -1,17 +1,4 @@
-export type FaqItem = {
-  question: string;
-  answer: string;
-  featured?: boolean;
-};
-
-export type FaqCategory = {
-  id: string;
-  title: string;
-  description: string;
-  items: FaqItem[];
-};
-
-export const faqCategories: FaqCategory[] = [
+export const faqCategories = [
   {
     id: "getting-started",
     title: "Getting started",
@@ -129,7 +116,6 @@ export const faqCategories: FaqCategory[] = [
     ],
   },
 ];
-
 export const landingFaqs = faqCategories.flatMap((category) =>
   category.items.filter((item) => item.featured),
 );

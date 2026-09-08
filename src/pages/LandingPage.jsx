@@ -1,4 +1,3 @@
-import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -22,14 +21,12 @@ import { PublicHeader } from "@/components/layout/PublicHeader";
 import { SkipLink } from "@/components/common/SkipLink";
 import { landingFaqs } from "@/data/faq";
 import "./LandingPage.css";
-
 const benefits = [
   "Save everything in one place",
   "Find the right link instantly",
   "Keep your library private",
 ];
-
-const features: { icon: LucideIcon; title: string; description: string }[] = [
+const features = [
   {
     icon: Folder,
     title: "Collections",
@@ -71,15 +68,13 @@ const features: { icon: LucideIcon; title: string; description: string }[] = [
     description: "Install LinkVault on supported mobile and desktop browsers for quick access.",
   },
 ];
-
 const steps = [
   ["Add a link", "Start with a platform account or any custom website URL."],
   ["Add context", "Choose a collection, add tags, and leave a short note."],
   ["Keep it useful", "Favorite important links and update details whenever you need."],
   ["Find it instantly", "Search or filter your library and open the right link."],
 ];
-
-const explorePages: { icon: LucideIcon; title: string; description: string; href: string }[] = [
+const explorePages = [
   {
     icon: LayoutGrid,
     title: "Features",
@@ -117,7 +112,6 @@ const explorePages: { icon: LucideIcon; title: string; description: string; href
     href: "/terms",
   },
 ];
-
 export function LandingPage() {
   return (
     <div className="landing-page">

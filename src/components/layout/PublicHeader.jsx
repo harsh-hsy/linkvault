@@ -1,6 +1,5 @@
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import "./PublicHeader.css";
-
 const landingNavigation = [
   { label: "Home", href: "/" },
   { label: "Features", href: "#features" },
@@ -9,7 +8,6 @@ const landingNavigation = [
   { label: "FAQ", href: "#faq" },
   { label: "Learn more", href: "#learn-more" },
 ];
-
 const pageNavigation = [
   { label: "Home", href: "/" },
   { label: "Features", href: "/features" },
@@ -19,12 +17,10 @@ const pageNavigation = [
   { label: "FAQ", href: "/faq" },
   { label: "Terms", href: "/terms" },
 ];
-
 export function PublicHeader() {
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const isLandingPage = currentPath === "/";
   const navigation = isLandingPage ? landingNavigation : pageNavigation;
-
   return (
     <header className={`public-header ${isLandingPage ? "landing-public-header" : "page-header"}`}>
       <a className="public-brand" href="/" aria-label="LinkVault home">

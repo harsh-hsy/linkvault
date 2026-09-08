@@ -1,4 +1,3 @@
-import type { IconType } from "react-icons";
 import { BsOpenai } from "react-icons/bs";
 import {
   FaAmazon,
@@ -103,26 +102,13 @@ import {
 } from "react-icons/si";
 import { TbBrandOnedrive } from "react-icons/tb";
 import { Globe2, Palette } from "lucide-react";
-import type { PlatformId } from "@/types/link";
-
-export type Platform = {
-  id: PlatformId;
-  name: string;
-  icon: IconType;
-  keywords: string[];
-  usernameLabel?: string;
-  usernamePlaceholder?: string;
-  profileBaseUrl?: string;
-};
-
-const customPlatform: Platform = {
+const customPlatform = {
   id: "custom",
   name: "Custom website",
   icon: Globe2,
   keywords: ["website", "url", "link", "custom"],
 };
-
-export const platforms: Platform[] = [
+export const platforms = [
   customPlatform,
   {
     id: "github",
@@ -460,7 +446,6 @@ export const platforms: Platform[] = [
     usernamePlaceholder: "creator",
     profileBaseUrl: "https://patreon.com/",
   },
-
   // Social and messaging
   {
     id: "snapchat",
@@ -534,7 +519,6 @@ export const platforms: Platform[] = [
     icon: FaMicrosoft,
     keywords: ["microsoft", "work", "meeting", "team"],
   },
-
   // Developer and cloud
   {
     id: "codepen",
@@ -620,7 +604,6 @@ export const platforms: Platform[] = [
     usernamePlaceholder: "username",
     profileBaseUrl: "https://codeforces.com/profile/",
   },
-
   // AI tools
   {
     id: "chatgpt",
@@ -682,7 +665,6 @@ export const platforms: Platform[] = [
     icon: SiGoogle,
     keywords: ["google", "gemini", "ai", "developer"],
   },
-
   // Productivity and storage
   {
     id: "googledrive",
@@ -744,7 +726,6 @@ export const platforms: Platform[] = [
     icon: SiObsidian,
     keywords: ["notes", "knowledge", "markdown", "productivity"],
   },
-
   // Design and learning
   {
     id: "canva",
@@ -821,7 +802,6 @@ export const platforms: Platform[] = [
     icon: SiGeeksforgeeks,
     keywords: ["code", "learning", "interview", "developer"],
   },
-
   // Commerce, creators, and entertainment
   {
     id: "amazon",
@@ -902,7 +882,6 @@ export const platforms: Platform[] = [
     profileBaseUrl: "https://letterboxd.com/",
   },
 ];
-
-export function getPlatform(platformId: PlatformId) {
+export function getPlatform(platformId) {
   return platforms.find((platform) => platform.id === platformId) ?? customPlatform;
 }

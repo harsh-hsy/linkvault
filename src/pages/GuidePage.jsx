@@ -15,14 +15,12 @@ import { SkipLink } from "@/components/common/SkipLink";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import "./GuidePage.css";
-
 const guideSteps = [
   ["01", "Choose a link type", "Start with a supported platform or any custom website."],
   ["02", "Add useful details", "Enter the URL, title, collection, tags, and an optional note."],
   ["03", "Organize your library", "Use collections and favorites to keep important links close."],
   ["04", "Search and manage", "Find links instantly, then open, copy, edit, or delete them."],
 ];
-
 const linkDetails = [
   ["URL or username", "Paste a complete URL, or enter a username when the platform supports it."],
   ["Title", "Use a short, recognizable name that will be easy to search later."],
@@ -31,7 +29,6 @@ const linkDetails = [
   ["Note", "Record why the link matters or what you want to do with it."],
   ["Favorite", "Select the star when you expect to open the link frequently."],
 ];
-
 const actions = [
   { icon: Link2, title: "Open", description: "Visit the saved destination in a new browser tab." },
   { icon: Copy, title: "Copy URL", description: "Copy the complete address to your clipboard." },
@@ -42,7 +39,6 @@ const actions = [
     description: "Add or remove the link from your favorites view.",
   },
 ];
-
 export function GuidePage() {
   return (
     <div className="guide-page">

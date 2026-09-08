@@ -1,5 +1,8 @@
 .app-shell {
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 .app-main {
@@ -12,6 +15,8 @@
 
 .content {
   width: min(100%, 1440px);
+  min-width: 0;
+  max-width: 100%;
   flex: 1;
   margin: 0 auto;
   padding: 36px clamp(16px, 3vw, 32px);
@@ -94,13 +99,15 @@
 
 .link-grid {
   display: grid;
+  width: 100%;
+  min-width: 0;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin-top: 20px;
 }
 
 .link-grid.is-list {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .empty-state {
@@ -183,7 +190,7 @@
   }
 
   .link-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

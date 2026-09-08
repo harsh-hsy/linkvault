@@ -1,4 +1,3 @@
-import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   Check,
@@ -17,16 +16,7 @@ import { SkipLink } from "@/components/common/SkipLink";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import "./InstallPage.css";
-
-type InstallMethod = {
-  icon: LucideIcon;
-  platform: string;
-  title: string;
-  steps: string[];
-  note: string;
-};
-
-const installMethods: InstallMethod[] = [
+const installMethods = [
   {
     icon: Smartphone,
     platform: "Android",
@@ -64,14 +54,12 @@ const installMethods: InstallMethod[] = [
     note: "Browser support and the placement of the install action can differ.",
   },
 ];
-
 const installedBenefits = [
   "A LinkVault icon on your home screen or app launcher",
   "A focused standalone window without regular browser tabs",
   "Direct access to the same local library in that browser profile",
   "A cached interface for quicker repeat visits",
 ];
-
 const troubleshooting = [
   {
     icon: Menu,
@@ -92,7 +80,6 @@ const troubleshooting = [
       "Connect to the internet, reopen LinkVault, and refresh it so the latest app files can load.",
   },
 ];
-
 export function InstallPage() {
   return (
     <div className="install-page">

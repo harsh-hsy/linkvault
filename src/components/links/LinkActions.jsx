@@ -1,38 +1,18 @@
 import { useEffect, useRef } from "react";
 import { Copy, ExternalLink, MoreHorizontal, Pencil, Star, Trash2 } from "lucide-react";
-import type { SavedLink } from "@/types/link";
 import "./LinkActions.css";
-
-type LinkActionsProps = {
-  link: SavedLink;
-  onCopy: (link: SavedLink) => void;
-  onDelete: (link: SavedLink) => void;
-  onEdit: (link: SavedLink) => void;
-  onToggleFavorite: (linkId: string) => void;
-};
-
-export function LinkActions({
-  link,
-  onCopy,
-  onDelete,
-  onEdit,
-  onToggleFavorite,
-}: LinkActionsProps) {
-  const menuRef = useRef<HTMLDetailsElement>(null);
-
+export function LinkActions({ link, onCopy, onDelete, onEdit, onToggleFavorite }) {
+  const menuRef = useRef(null);
   useEffect(() => {
-    function closeMenu(event: PointerEvent) {
+    function closeMenu(event) {
       const menu = menuRef.current;
-
       if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) {
         menu.open = false;
       }
     }
-
     document.addEventListener("pointerdown", closeMenu);
     return () => document.removeEventListener("pointerdown", closeMenu);
   }, []);
-
   return (
     <div className="link-actions">
       <button

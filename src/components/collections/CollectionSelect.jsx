@@ -1,26 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Folder } from "lucide-react";
 import "./CollectionSelect.css";
-
-type CollectionSelectProps = {
-  collections: string[];
-  value: string;
-  onChange: (value: string) => void;
-};
-
-export function CollectionSelect({ collections, value, onChange }: CollectionSelectProps) {
+export function CollectionSelect({ collections, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
+  const containerRef = useRef(null);
   useEffect(() => {
-    function closeMenu(event: PointerEvent) {
-      if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false);
+    function closeMenu(event) {
+      if (!containerRef.current?.contains(event.target)) setIsOpen(false);
     }
-
-    function closeOnEscape(event: KeyboardEvent) {
+    function closeOnEscape(event) {
       if (event.key === "Escape") setIsOpen(false);
     }
-
     document.addEventListener("pointerdown", closeMenu);
     document.addEventListener("keydown", closeOnEscape);
     return () => {
@@ -28,12 +18,10 @@ export function CollectionSelect({ collections, value, onChange }: CollectionSel
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, []);
-
-  function selectCollection(name: string) {
+  function selectCollection(name) {
     onChange(name);
     setIsOpen(false);
   }
-
   return (
     <div className="collection-select-control" ref={containerRef}>
       <button

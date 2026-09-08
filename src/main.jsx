@@ -12,7 +12,6 @@ import { InstallPage } from "@/pages/InstallPage";
 import { LandingPage } from "@/pages/LandingPage";
 import { PrivacyPage } from "@/pages/PrivacyPage";
 import { TermsPage } from "@/pages/TermsPage";
-
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const isAppRoute = currentPath === "/app";
 const isFeaturesRoute = currentPath === "/features";
@@ -21,10 +20,8 @@ const isInstallRoute = currentPath === "/install";
 const isPrivacyRoute = currentPath === "/privacy";
 const isFaqRoute = currentPath === "/faq";
 const isTermsRoute = currentPath === "/terms";
-
-function updateMetadata(title: string, description: string, path: string) {
+function updateMetadata(title, description, path) {
   const url = `https://getlinkvault.pages.dev${path}`;
-
   document.title = title;
   document.querySelector('meta[name="description"]')?.setAttribute("content", description);
   document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
@@ -34,7 +31,6 @@ function updateMetadata(title: string, description: string, path: string) {
   document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", description);
   document.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
 }
-
 if (isAppRoute) {
   updateMetadata(
     "My Links — LinkVault",
@@ -81,9 +77,7 @@ if (isAppRoute) {
     "/terms",
   );
 }
-
 let currentPage = <LandingPage />;
-
 if (isAppRoute) currentPage = <AppShell />;
 if (isFeaturesRoute) currentPage = <FeaturesPage />;
 if (isGuideRoute) currentPage = <GuidePage />;
@@ -91,9 +85,7 @@ if (isInstallRoute) currentPage = <InstallPage />;
 if (isPrivacyRoute) currentPage = <PrivacyPage />;
 if (isFaqRoute) currentPage = <FaqPage />;
 if (isTermsRoute) currentPage = <TermsPage />;
-
-createRoot(document.getElementById("root")!).render(<StrictMode>{currentPage}</StrictMode>);
-
+createRoot(document.getElementById("root")).render(<StrictMode>{currentPage}</StrictMode>);
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/service-worker.js").catch(() => undefined);

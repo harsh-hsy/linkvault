@@ -5,6 +5,9 @@
 .link-card {
   position: relative;
   display: flex;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 220px;
   flex-direction: column;
   padding: 16px;
@@ -25,6 +28,7 @@
 
 .link-card-header {
   display: flex;
+  min-width: 0;
   align-items: flex-start;
   gap: 12px;
 }

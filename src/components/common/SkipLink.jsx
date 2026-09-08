@@ -1,10 +1,5 @@
 import "./SkipLink.css";
-
-type SkipLinkProps = {
-  targetId: string;
-};
-
-export function SkipLink({ targetId }: SkipLinkProps) {
+export function SkipLink({ targetId }) {
   return (
     <a className="skip-link" href={`#${targetId}`}>
       Skip to content

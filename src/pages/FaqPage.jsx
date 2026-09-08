@@ -4,9 +4,7 @@ import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import { faqCategories } from "@/data/faq";
 import "./FaqPage.css";
-
 const categoryIcons = [BookOpen, HelpCircle, ShieldCheck, Smartphone];
-
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -21,7 +19,6 @@ const faqSchema = {
     })),
   ),
 };
-
 export function FaqPage() {
   return (
     <div className="faq-page">

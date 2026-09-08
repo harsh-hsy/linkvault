@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import {
   ArrowRight,
   Check,
@@ -12,7 +11,6 @@ import { SkipLink } from "@/components/common/SkipLink";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
 import "./TermsPage.css";
-
 const sections = [
   ["acceptance", "Acceptance"],
   ["service", "The service"],
@@ -26,18 +24,7 @@ const sections = [
   ["changes", "Changes"],
   ["contact", "Contact"],
 ];
-
-function TermsSection({
-  id,
-  number,
-  title,
-  children,
-}: {
-  id: string;
-  number: string;
-  title: string;
-  children: ReactNode;
-}) {
+function TermsSection({ id, number, title, children }) {
   return (
     <section className="terms-section" id={id}>
       <span>{number}</span>
@@ -48,7 +35,6 @@ function TermsSection({
     </section>
   );
 }
-
 export function TermsPage() {
   return (
     <div className="terms-page">

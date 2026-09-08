@@ -1,36 +1,19 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { FolderPlus, X } from "lucide-react";
 import "./CollectionDialog.css";
-
-type CollectionDialogProps = {
-  currentName?: string;
-  error?: string;
-  onClose: () => void;
-  onSave: (name: string) => void;
-};
-
-export function CollectionDialog({
-  currentName = "",
-  error,
-  onClose,
-  onSave,
-}: CollectionDialogProps) {
+export function CollectionDialog({ currentName = "", error, onClose, onSave }) {
   const [name, setName] = useState(currentName);
-
   useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
+    function closeOnEscape(event) {
       if (event.key === "Escape") onClose();
     }
-
     document.addEventListener("keydown", closeOnEscape);
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [onClose]);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event) {
     event.preventDefault();
     onSave(name);
   }
-
   return (
     <div className="dialog-backdrop" role="presentation" onMouseDown={onClose}>
       <section

@@ -1,15 +1,7 @@
 import { Menu, Plus, Search } from "lucide-react";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import "./AppHeader.css";
-
-type AppHeaderProps = {
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-  onAddLink: () => void;
-  onMenuClick: () => void;
-};
-
-export function AppHeader({ searchQuery, onSearchChange, onAddLink, onMenuClick }: AppHeaderProps) {
+export function AppHeader({ searchQuery, onSearchChange, onAddLink, onMenuClick }) {
   return (
     <header className="app-header">
       <button

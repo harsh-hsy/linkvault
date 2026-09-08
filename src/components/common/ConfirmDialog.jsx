@@ -1,31 +1,14 @@
 import { useEffect } from "react";
 import { AlertTriangle } from "lucide-react";
 import "./ConfirmDialog.css";
-
-type ConfirmDialogProps = {
-  title: string;
-  description: string;
-  confirmLabel: string;
-  onCancel: () => void;
-  onConfirm: () => void;
-};
-
-export function ConfirmDialog({
-  title,
-  description,
-  confirmLabel,
-  onCancel,
-  onConfirm,
-}: ConfirmDialogProps) {
+export function ConfirmDialog({ title, description, confirmLabel, onCancel, onConfirm }) {
   useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
+    function closeOnEscape(event) {
       if (event.key === "Escape") onCancel();
     }
-
     document.addEventListener("keydown", closeOnEscape);
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [onCancel]);
-
   return (
     <div className="dialog-backdrop" role="presentation" onMouseDown={onCancel}>
       <section

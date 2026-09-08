@@ -2,21 +2,10 @@ import { LinkActions } from "@/components/links/LinkActions";
 import { WebsiteFavicon } from "@/components/links/WebsiteFavicon";
 import { getPlatform } from "@/data/platforms";
 import { getDisplayUrl } from "@/lib/url";
-import type { SavedLink } from "@/types/link";
 import "./LinkCard.css";
-
-type LinkCardProps = {
-  link: SavedLink;
-  onCopy: (link: SavedLink) => void;
-  onDelete: (link: SavedLink) => void;
-  onEdit: (link: SavedLink) => void;
-  onToggleFavorite: (linkId: string) => void;
-};
-
-export function LinkCard({ link, onCopy, onDelete, onEdit, onToggleFavorite }: LinkCardProps) {
+export function LinkCard({ link, onCopy, onDelete, onEdit, onToggleFavorite }) {
   const platform = getPlatform(link.platformId);
   const PlatformIcon = platform.icon;
-
   return (
     <article className="link-card">
       <div className="link-card-header">

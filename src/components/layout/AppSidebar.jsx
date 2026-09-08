@@ -1,24 +1,5 @@
 import { Archive, Info, Pencil, Plus, Star, Trash2, X } from "lucide-react";
-import type { SavedLink } from "@/types/link";
 import "./AppSidebar.css";
-
-export type LibraryView =
-  | { type: "all" }
-  | { type: "favorites" }
-  | { type: "collection"; name: string };
-
-type AppSidebarProps = {
-  links: SavedLink[];
-  collections: string[];
-  selectedView: LibraryView;
-  isOpen: boolean;
-  onSelect: (view: LibraryView) => void;
-  onCreateCollection: () => void;
-  onEditCollection: (name: string) => void;
-  onDeleteCollection: (name: string) => void;
-  onClose: () => void;
-};
-
 export function AppSidebar({
   links,
   collections,
@@ -29,9 +10,8 @@ export function AppSidebar({
   onEditCollection,
   onDeleteCollection,
   onClose,
-}: AppSidebarProps) {
+}) {
   const favoriteCount = links.filter((link) => link.isFavorite).length;
-
   return (
     <>
       {isOpen && (
@@ -146,16 +126,7 @@ export function AppSidebar({
     </>
   );
 }
-
-type SidebarItemProps = {
-  icon: typeof Archive;
-  label: string;
-  count: number;
-  active: boolean;
-  onClick: () => void;
-};
-
-function SidebarItem({ icon: Icon, label, count, active, onClick }: SidebarItemProps) {
+function SidebarItem({ icon: Icon, label, count, active, onClick }) {
   return (
     <button className={`sidebar-item ${active ? "is-active" : ""}`} type="button" onClick={onClick}>
       <Icon aria-hidden="true" />

@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { ArrowRight, Globe2, Search } from "lucide-react";
-import { platforms, type Platform } from "@/data/platforms";
+import { platforms } from "@/data/platforms";
 import "./PlatformPicker.css";
-
-type PlatformPickerProps = {
-  onSelect: (platform: Platform) => void;
-};
-
-export function PlatformPicker({ onSelect }: PlatformPickerProps) {
+export function PlatformPicker({ onSelect }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const customPlatform = platforms[0];
@@ -29,7 +24,6 @@ export function PlatformPicker({ onSelect }: PlatformPickerProps) {
           return Number(secondStartsWithQuery) - Number(firstStartsWithQuery);
         })
     : [];
-
   return (
     <div className="platform-step">
       <div className="platform-search-row">
@@ -97,15 +91,8 @@ export function PlatformPicker({ onSelect }: PlatformPickerProps) {
     </div>
   );
 }
-
-type PlatformResultProps = {
-  platform: Platform;
-  onSelect: (platform: Platform) => void;
-};
-
-function PlatformResult({ platform, onSelect }: PlatformResultProps) {
+function PlatformResult({ platform, onSelect }) {
   const Icon = platform.icon;
-
   return (
     <button type="button" onClick={() => onSelect(platform)}>
       <span className="result-platform-icon">

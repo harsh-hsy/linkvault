@@ -5,19 +5,11 @@ import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { CollectionDialog } from "@/components/collections/CollectionDialog";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { AppHeader } from "@/components/layout/AppHeader";
-import { AppSidebar, type LibraryView } from "@/components/layout/AppSidebar";
+import { AppSidebar } from "@/components/layout/AppSidebar";
 import { AddLinkDialog } from "@/components/links/AddLinkDialog";
 import { LinkCard } from "@/components/links/LinkCard";
 import { useCollections } from "@/hooks/useCollections";
 import { useLinks } from "@/hooks/useLinks";
-import type { LinkDraft, SavedLink } from "@/types/link";
-
-type CardView = "grid" | "list";
-type SortOrder = "newest" | "title";
-type PendingDelete =
-  | { type: "link"; link: SavedLink }
-  | { type: "collection"; name: string; linkCount: number };
-
 export function AppShell() {
   const {
     links,
@@ -36,16 +28,15 @@ export function AppShell() {
   } = useCollections();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingLink, setEditingLink] = useState<SavedLink>();
-  const [collectionDialog, setCollectionDialog] = useState<{ currentName?: string }>();
+  const [editingLink, setEditingLink] = useState();
+  const [collectionDialog, setCollectionDialog] = useState();
   const [collectionError, setCollectionError] = useState("");
-  const [pendingDelete, setPendingDelete] = useState<PendingDelete>();
-  const [libraryView, setLibraryView] = useState<LibraryView>({ type: "all" });
-  const [cardView, setCardView] = useState<CardView>("grid");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const [pendingDelete, setPendingDelete] = useState();
+  const [libraryView, setLibraryView] = useState({ type: "all" });
+  const [cardView, setCardView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("newest");
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
-
   const linkedCollections = links.map((link) => link.collection).filter(Boolean);
   const collections = [
     ...new Map(
@@ -56,38 +47,31 @@ export function AppShell() {
     .filter((link) => {
       if (libraryView.type === "favorites" && !link.isFavorite) return false;
       if (libraryView.type === "collection" && link.collection !== libraryView.name) return false;
-
       const searchableText = [link.title, link.url, link.note, link.collection, ...link.tags]
         .join(" ")
         .toLowerCase();
-
       return searchableText.includes(searchQuery.trim().toLowerCase());
     })
     .sort((firstLink, secondLink) => {
       if (sortOrder === "title") return firstLink.title.localeCompare(secondLink.title);
       return Date.parse(secondLink.createdAt) - Date.parse(firstLink.createdAt);
     });
-
   const pageTitle =
     libraryView.type === "favorites"
       ? "Favorites"
       : libraryView.type === "collection"
         ? libraryView.name
         : "All links";
-
   function openAddForm() {
     setEditingLink(undefined);
     setIsFormOpen(true);
   }
-
-  function openEditForm(link: SavedLink) {
+  function openEditForm(link) {
     setEditingLink(link);
     setIsFormOpen(true);
   }
-
-  function saveLink(draft: LinkDraft) {
+  function saveLink(draft) {
     addCollection(draft.collection);
-
     if (editingLink) {
       updateLink(editingLink.id, draft);
       showMessage("Link updated");
@@ -95,40 +79,32 @@ export function AppShell() {
       addLink(draft);
       showMessage("Link saved");
     }
-
     setIsFormOpen(false);
     setEditingLink(undefined);
   }
-
-  function openCollectionDialog(currentName?: string) {
+  function openCollectionDialog(currentName) {
     setCollectionError("");
     setCollectionDialog({ currentName });
   }
-
   function closeCollectionDialog() {
     setCollectionDialog(undefined);
     setCollectionError("");
   }
-
-  function saveCollection(name: string) {
+  function saveCollection(name) {
     const cleanName = name.trim();
     const currentName = collectionDialog?.currentName;
-
     if (!cleanName) {
       setCollectionError("Enter a collection name.");
       return;
     }
-
     const duplicateExists = collections.some(
       (collection) =>
         collection.toLowerCase() === cleanName.toLowerCase() && collection !== currentName,
     );
-
     if (duplicateExists) {
       setCollectionError("A collection with this name already exists.");
       return;
     }
-
     if (currentName) {
       renameSavedCollection(currentName, cleanName);
       renameLinksCollection(currentName, cleanName);
@@ -140,22 +116,17 @@ export function AppShell() {
       addCollection(cleanName);
       showMessage("Collection created");
     }
-
     closeCollectionDialog();
   }
-
-  function requestCollectionDelete(name: string) {
+  function requestCollectionDelete(name) {
     const linkCount = links.filter((link) => link.collection === name).length;
     setPendingDelete({ type: "collection", name, linkCount });
   }
-
-  function requestLinkDelete(link: SavedLink) {
+  function requestLinkDelete(link) {
     setPendingDelete({ type: "link", link });
   }
-
   function confirmDelete() {
     if (!pendingDelete) return;
-
     if (pendingDelete.type === "link") {
       deleteLink(pendingDelete.link.id);
       showMessage("Link deleted");
@@ -167,11 +138,9 @@ export function AppShell() {
       }
       showMessage("Collection deleted");
     }
-
     setPendingDelete(undefined);
   }
-
-  async function copyLink(link: SavedLink) {
+  async function copyLink(link) {
     try {
       await navigator.clipboard.writeText(link.url);
       showMessage("URL copied");
@@ -179,12 +148,10 @@ export function AppShell() {
       showMessage("Could not copy URL");
     }
   }
-
-  function showMessage(nextMessage: string) {
+  function showMessage(nextMessage) {
     setMessage(nextMessage);
     window.setTimeout(() => setMessage(""), 2200);
   }
-
   return (
     <div className="app-shell">
       <AppSidebar
@@ -274,7 +241,7 @@ export function AppShell() {
             <select
               aria-label="Sort links"
               value={sortOrder}
-              onChange={(event) => setSortOrder(event.target.value as SortOrder)}
+              onChange={(event) => setSortOrder(event.target.value)}
             >
               <option value="newest">Recently added</option>
               <option value="title">Title A–Z</option>
@@ -343,9 +310,7 @@ export function AppShell() {
             pendingDelete.type === "link"
               ? `“${pendingDelete.link.title}” will be permanently removed from this browser.`
               : pendingDelete.linkCount > 0
-                ? `“${pendingDelete.name}” will be removed. Its ${pendingDelete.linkCount} ${
-                    pendingDelete.linkCount === 1 ? "link" : "links"
-                  } will stay saved without a collection.`
+                ? `“${pendingDelete.name}” will be removed. Its ${pendingDelete.linkCount} ${pendingDelete.linkCount === 1 ? "link" : "links"} will stay saved without a collection.`
                 : `“${pendingDelete.name}” will be permanently removed.`
           }
           confirmLabel={pendingDelete.type === "link" ? "Delete link" : "Delete collection"}
