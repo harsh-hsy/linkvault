@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
+import { SkipLink } from "@/components/common/SkipLink";
 import "./FeaturesPage.css";
 
 type Feature = {
@@ -120,9 +121,7 @@ function FeatureGroup({
 export function FeaturesPage() {
   return (
     <div className="features-page">
-      <a className="skip-link" href="#features-content">
-        Skip to content
-      </a>
+      <SkipLink targetId="features-content" />
       <PublicHeader />
 
       <main id="features-content">

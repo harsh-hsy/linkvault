@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { AppFooter } from "@/components/layout/AppFooter";
 import { PublicHeader } from "@/components/layout/PublicHeader";
+import { SkipLink } from "@/components/common/SkipLink";
 import "./LandingPage.css";
 
 const benefits = [
@@ -150,9 +151,7 @@ const explorePages: { icon: LucideIcon; title: string; description: string; href
 export function LandingPage() {
   return (
     <div className="landing-page">
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
+      <SkipLink targetId="main-content" />
 
       <PublicHeader />
 

@@ -2,11 +2,11 @@ import { ThemeToggle } from "@/components/common/ThemeToggle";
 import "./PublicHeader.css";
 
 const navigation = [
-  ["Features", "/#features"],
-  ["How it works", "/#guide"],
-  ["Privacy", "/#privacy"],
-  ["FAQ", "/#faq"],
-  ["Learn more", "/#learn-more"],
+  { label: "Features", sectionHref: "/#features", pagePath: "/features" },
+  { label: "How it works", sectionHref: "/#guide", pagePath: "/guide" },
+  { label: "Privacy", sectionHref: "/#privacy", pagePath: "/privacy" },
+  { label: "FAQ", sectionHref: "/#faq", pagePath: "/faq" },
+  { label: "Learn more", sectionHref: "/#learn-more" },
 ];
 
 export function PublicHeader() {
@@ -20,11 +20,11 @@ export function PublicHeader() {
       </a>
 
       <nav className="public-nav" aria-label="Public pages">
-        {navigation.map(([label, href]) => (
+        {navigation.map(({ label, sectionHref, pagePath }) => (
           <a
-            href={currentPath === "/features" && label === "Features" ? "/features" : href}
+            href={currentPath === pagePath ? pagePath : sectionHref}
             key={label}
-            aria-current={currentPath === "/features" && label === "Features" ? "page" : undefined}
+            aria-current={currentPath === pagePath ? "page" : undefined}
           >
             {label}
           </a>

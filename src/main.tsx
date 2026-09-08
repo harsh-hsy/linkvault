@@ -6,11 +6,13 @@ import "./styles/controls.css";
 import "./styles/dialogs.css";
 import { AppShell } from "@/components/layout/AppShell";
 import { FeaturesPage } from "@/pages/FeaturesPage";
+import { GuidePage } from "@/pages/GuidePage";
 import { LandingPage } from "@/pages/LandingPage";
 
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const isAppRoute = currentPath === "/app";
 const isFeaturesRoute = currentPath === "/features";
+const isGuideRoute = currentPath === "/guide";
 
 function updateMetadata(title: string, description: string, path: string) {
   const url = `https://getlinkvault.pages.dev${path}`;
@@ -40,15 +42,19 @@ if (isAppRoute) {
     "Explore LinkVault features for organizing and finding bookmarks with collections, tags, favorites, instant search, custom favicons, and private local storage.",
     "/features",
   );
+} else if (isGuideRoute) {
+  updateMetadata(
+    "LinkVault Guide — Save and Organize Links",
+    "Learn how to save, organize, search, and manage links in LinkVault using platforms, custom websites, collections, tags, notes, and favorites.",
+    "/guide",
+  );
 }
 
-const currentPage = isAppRoute ? (
-  <AppShell />
-) : isFeaturesRoute ? (
-  <FeaturesPage />
-) : (
-  <LandingPage />
-);
+let currentPage = <LandingPage />;
+
+if (isAppRoute) currentPage = <AppShell />;
+if (isFeaturesRoute) currentPage = <FeaturesPage />;
+if (isGuideRoute) currentPage = <GuidePage />;
 
 createRoot(document.getElementById("root")!).render(<StrictMode>{currentPage}</StrictMode>);
 
