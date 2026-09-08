@@ -8,6 +8,16 @@ LinkVault is a private, local-first bookmark manager for saving, organizing, and
 
 **Open the app:** [getlinkvault.pages.dev/app](https://getlinkvault.pages.dev/app)
 
+## Preview
+
+### Landing page
+
+![LinkVault landing page](docs/images/linkvault-landing-page.png)
+
+### Link library
+
+![LinkVault app showing saved links and collections](docs/images/linkvault-app.png)
+
 ## Features
 
 - Add, edit, delete, open, and copy saved links
