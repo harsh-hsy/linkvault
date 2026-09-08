@@ -11,6 +11,7 @@ import { GuidePage } from "@/pages/GuidePage";
 import { InstallPage } from "@/pages/InstallPage";
 import { LandingPage } from "@/pages/LandingPage";
 import { PrivacyPage } from "@/pages/PrivacyPage";
+import { TermsPage } from "@/pages/TermsPage";
 
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const isAppRoute = currentPath === "/app";
@@ -19,6 +20,7 @@ const isGuideRoute = currentPath === "/guide";
 const isInstallRoute = currentPath === "/install";
 const isPrivacyRoute = currentPath === "/privacy";
 const isFaqRoute = currentPath === "/faq";
+const isTermsRoute = currentPath === "/terms";
 
 function updateMetadata(title: string, description: string, path: string) {
   const url = `https://getlinkvault.pages.dev${path}`;
@@ -72,6 +74,12 @@ if (isAppRoute) {
     "Find answers about LinkVault accounts, collections, tags, local browser storage, privacy, installation, offline access, backup, and device sync.",
     "/faq",
   );
+} else if (isTermsRoute) {
+  updateMetadata(
+    "LinkVault Terms and Conditions",
+    "Read the terms for using LinkVault, including acceptable use, local data responsibilities, third-party links, availability, disclaimers, and liability limits.",
+    "/terms",
+  );
 }
 
 let currentPage = <LandingPage />;
@@ -82,6 +90,7 @@ if (isGuideRoute) currentPage = <GuidePage />;
 if (isInstallRoute) currentPage = <InstallPage />;
 if (isPrivacyRoute) currentPage = <PrivacyPage />;
 if (isFaqRoute) currentPage = <FaqPage />;
+if (isTermsRoute) currentPage = <TermsPage />;
 
 createRoot(document.getElementById("root")!).render(<StrictMode>{currentPage}</StrictMode>);
 
