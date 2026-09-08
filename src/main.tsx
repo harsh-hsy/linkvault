@@ -9,12 +9,14 @@ import { FeaturesPage } from "@/pages/FeaturesPage";
 import { GuidePage } from "@/pages/GuidePage";
 import { InstallPage } from "@/pages/InstallPage";
 import { LandingPage } from "@/pages/LandingPage";
+import { PrivacyPage } from "@/pages/PrivacyPage";
 
 const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const isAppRoute = currentPath === "/app";
 const isFeaturesRoute = currentPath === "/features";
 const isGuideRoute = currentPath === "/guide";
 const isInstallRoute = currentPath === "/install";
+const isPrivacyRoute = currentPath === "/privacy";
 
 function updateMetadata(title: string, description: string, path: string) {
   const url = `https://getlinkvault.pages.dev${path}`;
@@ -56,6 +58,12 @@ if (isAppRoute) {
     "Install LinkVault on supported mobile and desktop browsers and learn how local storage, app updates, and cached access work.",
     "/install",
   );
+} else if (isPrivacyRoute) {
+  updateMetadata(
+    "LinkVault Privacy — Your Links Stay Local",
+    "Learn what LinkVault stores locally, when network requests occur, and how to control or delete your browser-based link library.",
+    "/privacy",
+  );
 }
 
 let currentPage = <LandingPage />;
@@ -64,6 +72,7 @@ if (isAppRoute) currentPage = <AppShell />;
 if (isFeaturesRoute) currentPage = <FeaturesPage />;
 if (isGuideRoute) currentPage = <GuidePage />;
 if (isInstallRoute) currentPage = <InstallPage />;
+if (isPrivacyRoute) currentPage = <PrivacyPage />;
 
 createRoot(document.getElementById("root")!).render(<StrictMode>{currentPage}</StrictMode>);
 
